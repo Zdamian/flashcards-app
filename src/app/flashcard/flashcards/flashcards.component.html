@@ -3,7 +3,11 @@
   <button (click)="getFlashcards('home')">home flashcards</button>
   <button (click)="getFlashcards('work')">work flashcards</button>
   <button (click)="getFlashcards('eating')">eating flashcards</button>
+  <button (click)="getGategories('categories')">get categories</button>
+  <button (click)="getWords('words')">get words</button>
 </p>
+
+<!--List of all words of chosen category-->
 <ul>
   <li *ngFor="let card of flashcards"
     [ngClass]="{'known': card.known, 'unknown': !card.known}">
@@ -12,5 +16,41 @@
     <span>{{ card.english }}</span>
     <span>{{ card.known }}</span>
     <span>{{ card.category.name }}</span>
+  </li>
+</ul>
+
+<!--List of all categories-->
+<ul>
+  <li *ngFor="let category of allCategories">
+    <span (click)="getCategory(category._id)">{{ category.name }}</span>
+  </li>
+</ul>
+
+<!--List of all words-->
+<ul>
+  <li *ngFor="let word of allWords"
+    [ngClass]="{'known': word.known, 'unknown': !word.known}">
+    <div (click)="getWord(word._id)">
+      <span>{{ word.polish }}</span>
+      -
+      <span>{{ word.english }}</span>
+    </div>
+  </li>
+</ul>
+
+<!--Chosen category-->
+<ul>
+  <li *ngFor="let category of categories">
+    <span>{{ category.name }}</span>
+  </li>
+</ul>
+
+<!--Chosen word-->
+<ul>
+  <li *ngFor="let word of words"
+    [ngClass]="{'known': word.known, 'unknown': !word.known}">
+      <span>{{ word.polish }}</span>
+      -
+      <span>{{ word.english }}</span>
   </li>
 </ul>

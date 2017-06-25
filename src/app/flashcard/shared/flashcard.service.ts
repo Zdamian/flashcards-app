@@ -33,6 +33,38 @@ export class FlashcardService {
       .catch(this.handleError);
   }
 
+  public getGategories(categories: string): Observable<ICategory[]> {
+
+    const url = this.getUrl(categories)
+    return this.http.get(url)
+      .map(res => <ICategory[]>res.json())
+      .catch(this.handleError);
+  }
+
+  public getWords(words: string): Observable<IWord[]> {
+
+    const url = this.getUrl(words)
+    return this.http.get(url)
+      .map(res => <IWord[]>res.json())
+      .catch(this.handleError);
+  }
+
+  public getCategory(id: string): Observable<ICategory> {
+
+    const url = this.getUrl('categories', id)
+    return this.http.get(url)
+      .map(res => <ICategory>res.json())
+      .catch(this.handleError);
+  }
+
+  public getWord(id: string): Observable<IWord> {
+
+    const url = this.getUrl('words', id)
+    return this.http.get(url)
+      .map(res => <IWord>res.json())
+      .catch(this.handleError);
+  }
+
   private getUrl(endpoint: string, param?: string | number): string {
 
     const url = `${this.api}/${endpoint}`;
