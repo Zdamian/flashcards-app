@@ -21,7 +21,13 @@ export class FlashcardsComponent implements OnInit {
 
   public word: Word = <any>{};
 
+  public allCategoriesForm: Category[] = [];
+
   public Name: string;
+
+  public Polish: string;
+
+  public English: string;
 
   constructor(private flashcardService: FlashcardService) { }
 
@@ -34,6 +40,20 @@ export class FlashcardsComponent implements OnInit {
     this.allCategories = [];
     this.category = <any>{};
     this.word = <any>{};
+  }
+
+  showCategories() {
+    this.clearArrays()
+    this.flashcardService.getCategories()
+      .subscribe(categories => {
+        console.log(categories);
+        categories.forEach(category => {
+          const newCategory = new Category(category.name, category._id);
+          this.allCategoriesForm.push(newCategory);
+        });
+      }, err => {
+        console.error(err);
+      });
   }
 
   getFlashcards(category: string) {
@@ -107,10 +127,23 @@ export class FlashcardsComponent implements OnInit {
   }
 
   postCategory(name: string) {
+    this.clearArrays()
     this.flashcardService.postCategory(name)
       .subscribe(category => {
-      console.log(name);
       this.Name = '';
+      }, err => {
+        console.error(err);
+      });
+  }
+
+  postWord(polish: string, english: string, categoryId: string) {
+    this.clearArrays()
+    this.flashcardService.postWord(polish, english, categoryId)
+      .subscribe(word => {
+      console.log(polish, english, categoryId);
+      this.Polish = '';
+      this.English = '';
+      this.allCategoriesForm = [];
       }, err => {
         console.error(err);
       });

@@ -58,3 +58,14 @@
   <input type="text" placeholder="e.g home" [(ngModel)]="Name">
   <button (click)="postCategory(Name)">Add New Category</button>
 </div>
+
+<div>
+  <input type="text" placeholder="e.g house" [(ngModel)]="English">
+  <input type="text" placeholder="e.g dom" [(ngModel)]="Polish">
+  <select (mouseover)="showCategories()" #valueId ngControl="valueId" name="category">
+    <option *ngFor="let category of allCategoriesForm" [value]="category.id">
+      {{ category.name }}
+    </option>
+  </select>
+  <button (click)="postWord(Polish, English, valueId.value)">Add New Category</button>
+</div>
