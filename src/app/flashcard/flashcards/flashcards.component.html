@@ -42,6 +42,7 @@
 <ul *ngIf="category.name">
   <li>
     <span>{{ category.name }}</span>
+      <span (click)="editCategory(category.name, category.id)">Edit</span>
       <span (click)="deleteCategory(category.id)">X</span>
   </li>
 </ul>
@@ -58,8 +59,9 @@
 
 <!--Add category-->
 <div>
-  <input type="text" placeholder="e.g home" [(ngModel)]="Name">
-  <button (click)="postCategory(Name)">Add New Category</button>
+  <input type="text" placeholder="e.g home" [(ngModel)]="name">
+  <button (click)="postCategory(name)">Add New Category</button>
+  <button (click)="putCategory(name)">Edit Category</button>
 </div>
 
 <!--Add word-->

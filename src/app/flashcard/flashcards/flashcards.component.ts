@@ -25,6 +25,8 @@ export class FlashcardsComponent implements OnInit {
 
   public name: string;
 
+  public id: string;
+
   public polish: string;
 
   public english: string;
@@ -42,6 +44,26 @@ export class FlashcardsComponent implements OnInit {
     this.allCategories = [];
     this.category = <any>{};
     this.word = <any>{};
+  }
+
+  editCategory(name: string, id: string) {
+    this.clearArrays()
+      this.name = name;
+      this.id = id;
+      console.log(this.name, this.id);
+  }
+
+  putCategory(name: string, id) {
+    this.clearArrays()
+      this.name = name;
+      const Id = this.id;
+      console.log(this.name, Id);
+    this.flashcardService.putCategory(name, Id)
+      .subscribe(category => {
+      this.name = '';
+      }, err => {
+        console.error(err);
+      });
   }
 
   showCategories() {

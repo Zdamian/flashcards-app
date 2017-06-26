@@ -81,6 +81,14 @@ export class FlashcardService {
       .catch(this.handleError);
   }
 
+  public putCategory(name: string, id: string): Observable<ICategory> {
+
+    const url = this.getUrl('categories', id);
+    return this.http.put(url, {name: name})
+      .map(res => <ICategory[]>res.json())
+      .catch(this.handleError);
+  }
+
   public deleteWord(id: string): Observable<IWord> {
 
     const url = this.getUrl('words', id)
