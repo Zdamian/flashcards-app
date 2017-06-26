@@ -42,6 +42,7 @@
 <ul *ngIf="category.name">
   <li>
     <span>{{ category.name }}</span>
+      <span (click)="deleteCategory(category.id)">X</span>
   </li>
 </ul>
 
@@ -51,14 +52,17 @@
       <span>{{ word.polish }}</span>
       -
       <span>{{ word.english }}</span>
+      <span (click)="deleteWord(word.id)">X</span>
   </li>
 </ul>
 
+<!--Add category-->
 <div>
   <input type="text" placeholder="e.g home" [(ngModel)]="Name">
   <button (click)="postCategory(Name)">Add New Category</button>
 </div>
 
+<!--Add word-->
 <div>
   <input type="text" placeholder="e.g house" [(ngModel)]="English">
   <input type="text" placeholder="e.g dom" [(ngModel)]="Polish">
@@ -68,4 +72,9 @@
     </option>
   </select>
   <button (click)="postWord(Polish, English, valueId.value)">Add New Category</button>
+</div>
+
+<!--Delete message-->
+<div *ngIf="message.length > 0" class="message" (click)="removeMessage()">
+  <p>{{ message }}</p>
 </div>

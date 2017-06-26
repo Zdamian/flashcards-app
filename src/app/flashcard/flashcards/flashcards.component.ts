@@ -23,11 +23,13 @@ export class FlashcardsComponent implements OnInit {
 
   public allCategoriesForm: Category[] = [];
 
-  public Name: string;
+  public name: string;
 
-  public Polish: string;
+  public polish: string;
 
-  public English: string;
+  public english: string;
+
+  public message: String = '';
 
   constructor(private flashcardService: FlashcardService) { }
 
@@ -130,7 +132,7 @@ export class FlashcardsComponent implements OnInit {
     this.clearArrays()
     this.flashcardService.postCategory(name)
       .subscribe(category => {
-      this.Name = '';
+      this.name = '';
       }, err => {
         console.error(err);
       });
@@ -141,12 +143,37 @@ export class FlashcardsComponent implements OnInit {
     this.flashcardService.postWord(polish, english, categoryId)
       .subscribe(word => {
       console.log(polish, english, categoryId);
-      this.Polish = '';
-      this.English = '';
+      this.polish = '';
+      this.english = '';
       this.allCategoriesForm = [];
       }, err => {
         console.error(err);
       });
+  }
+
+  deleteWord(id: string) {
+    this.clearArrays()
+    this.flashcardService.deleteWord(id)
+      .subscribe(word => {
+      console.log(id);
+      }, err => {
+        console.error(err);
+      });
+  }
+
+  deleteCategory(id: string) {
+    this.clearArrays()
+    this.flashcardService.deleteCategory(id)
+      .subscribe(category => {
+      console.log(id);
+      }, err => {
+        console.error(err);
+        this.message = 'You can not delete this category';
+      });
+  }
+
+  removeMessage() {
+        this.message = '';
   }
 
 }

@@ -4,3 +4,16 @@
 .unknown {
     background-color: red;
 }
+.message {
+    height: 50px;
+    width: 250px;
+    background-color: lightgrey;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    p {
+        text-align: center;
+    }
+}

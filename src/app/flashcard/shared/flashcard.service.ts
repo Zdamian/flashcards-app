@@ -81,6 +81,22 @@ export class FlashcardService {
       .catch(this.handleError);
   }
 
+  public deleteWord(id: string): Observable<IWord> {
+
+    const url = this.getUrl('words', id)
+    return this.http.delete(url)
+      .map(res => <any>res.json())
+      .catch(this.handleError);
+  }
+
+  public deleteCategory(id: string): Observable<IWord> {
+
+    const url = this.getUrl('categories', id)
+    return this.http.delete(url)
+      .map(res => <any>res.json())
+      .catch(this.handleError);
+  }
+
   private getUrl(endpoint: string, param?: string | number): string {
 
     const url = `${this.api}/${endpoint}`;
