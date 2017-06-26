@@ -65,6 +65,22 @@ export class FlashcardService {
       .catch(this.handleError);
   }
 
+  public postCategory(name: string): Observable<ICategory> {
+
+    const url = this.getUrl('categories');
+    return this.http.post(url, {name: name})
+      .map(res => <ICategory>res.json())
+      .catch(this.handleError);
+  }
+
+  public postWord(polish: string, english: string, categoryId: string): Observable<IWord> {
+
+    const url = this.getUrl('words');
+    return this.http.post(url, {polish: polish, english: english, categoryId: categoryId})
+      .map(res => <IWord>res.json())
+      .catch(this.handleError);
+  }
+
   private getUrl(endpoint: string, param?: string | number): string {
 
     const url = `${this.api}/${endpoint}`;

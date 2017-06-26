@@ -53,3 +53,8 @@
       <span>{{ word.english }}</span>
   </li>
 </ul>
+
+<div>
+  <input type="text" placeholder="e.g home" [(ngModel)]="Name">
+  <button (click)="postCategory(Name)">Add New Category</button>
+</div>
