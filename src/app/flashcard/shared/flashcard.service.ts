@@ -33,17 +33,17 @@ export class FlashcardService {
       .catch(this.handleError);
   }
 
-  public getGategories(categories: string): Observable<ICategory[]> {
+  public getCategories(): Observable<ICategory[]> {
 
-    const url = this.getUrl(categories)
+    const url = this.getUrl('categories');
     return this.http.get(url)
       .map(res => <ICategory[]>res.json())
       .catch(this.handleError);
   }
 
-  public getWords(words: string): Observable<IWord[]> {
+  public getWords(): Observable<IWord[]> {
 
-    const url = this.getUrl(words)
+    const url = this.getUrl('words');
     return this.http.get(url)
       .map(res => <IWord[]>res.json())
       .catch(this.handleError);

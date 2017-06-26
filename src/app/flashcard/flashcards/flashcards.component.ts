@@ -17,21 +17,25 @@ export class FlashcardsComponent implements OnInit {
 
   public allWords: Word[] = [];
 
-  public categories: Category[] = [];
+  public category: Category = <any>{};
 
-  public words: Word[] = [];
+  public word: Word = <any>{};
 
   constructor(private flashcardService: FlashcardService) { }
 
   ngOnInit() {
   }
 
-  getFlashcards(category: string) {
+  public clearArrays() {
     this.flashcards = [];
-    this.categories = [];
     this.allWords = [];
     this.allCategories = [];
-    this.words = [];
+    this.category = <any>{};
+    this.word = <any>{};
+  }
+
+  getFlashcards(category: string) {
+    this.clearArrays()
     this.flashcardService.getFlashcards(category)
       .subscribe(words => {
         console.log(words);
@@ -45,16 +49,12 @@ export class FlashcardsComponent implements OnInit {
       });
   }
 
-  getGategories(categories: string) {
-    this.flashcards = [];
-    this.categories = [];
-    this.allWords = [];
-    this.allCategories = [];
-    this.words = [];
-    this.flashcardService.getGategories(categories)
-      .subscribe(gategories => {
-        console.log(gategories);
-        gategories.forEach(category => {
+  getCategories() {
+    this.clearArrays()
+    this.flashcardService.getCategories()
+      .subscribe(categories => {
+        console.log(categories);
+        categories.forEach(category => {
           const newCategory = new Category(category.name, category._id);
           this.allCategories.push(newCategory);
         });
@@ -64,13 +64,9 @@ export class FlashcardsComponent implements OnInit {
 
   }
 
-  getWords(words: string) {
-    this.flashcards = [];
-    this.categories = [];
-    this.allWords = [];
-    this.allCategories = [];
-    this.words = [];
-    this.flashcardService.getWords(words)
+  getWords() {
+    this.clearArrays()
+    this.flashcardService.getWords()
       .subscribe(words => {
         console.log(words);
         words.forEach(word => {
@@ -84,33 +80,25 @@ export class FlashcardsComponent implements OnInit {
   }
 
   getCategory(id: string) {
-    this.flashcards = [];
-    this.categories = [];
-    this.allWords = [];
-    this.allCategories = [];
-    this.words = [];
+    this.clearArrays()
     this.flashcardService.getCategory(id)
       .subscribe(category => {
       console.log(category);
           const newCategory = new Category(category.name, category._id);
-          this.categories.push(newCategory);
+          this.category = newCategory;
       }, err => {
         console.error(err);
       });
   }
 
   getWord(id: string) {
-    this.flashcards = [];
-    this.categories = [];
-    this.allWords = [];
-    this.allCategories = [];
-    this.words = [];
+    this.clearArrays()
     this.flashcardService.getWord(id)
       .subscribe(word => {
       console.log(word);
           const newCategory = new Category(word.category[0].name, word.category[0]._id);
           const newWord = new Word(word.polish, word.english, newCategory, word.known, word._id);
-          this.words.push(newWord);
+          this.word = newWord;
       }, err => {
         console.error(err);
       });
