@@ -53,6 +53,7 @@
       <span>{{ word.polish }}</span>
       -
       <span>{{ word.english }}</span>
+      <span (click)="editWord(word.polish, word.english, word.id, word.category.id)">Edit</span>
       <span (click)="deleteWord(word.id)">X</span>
   </li>
 </ul>
@@ -66,14 +67,15 @@
 
 <!--Add word-->
 <div>
-  <input type="text" placeholder="e.g house" [(ngModel)]="English">
-  <input type="text" placeholder="e.g dom" [(ngModel)]="Polish">
-  <select (mouseover)="showCategories()" #valueId ngControl="valueId" name="category">
+  <input type="text" placeholder="e.g house" [(ngModel)]="english">
+  <input type="text" placeholder="e.g dom" [(ngModel)]="polish">
+  <select [(ngModel)]="categoryId">
     <option *ngFor="let category of allCategoriesForm" [value]="category.id">
       {{ category.name }}
     </option>
   </select>
-  <button (click)="postWord(Polish, English, valueId.value)">Add New Category</button>
+  <button (click)="postWord(polish, english)">Add New Word</button>
+  <button (click)="putWord(polish, english)">Edit Word</button>
 </div>
 
 <!--Delete message-->

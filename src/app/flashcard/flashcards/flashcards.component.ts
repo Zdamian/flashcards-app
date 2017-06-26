@@ -31,11 +31,25 @@ export class FlashcardsComponent implements OnInit {
 
   public english: string;
 
+  public categoryId: string;
+
   public message: String = '';
 
   constructor(private flashcardService: FlashcardService) { }
 
   ngOnInit() {
+
+    this.flashcardService.getCategories()
+      .subscribe(categories => {
+        console.log(categories);
+        categories.forEach(category => {
+          const newCategory = new Category(category.name, category._id);
+          this.allCategoriesForm.push(newCategory);
+        });
+      }, err => {
+        console.error(err);
+      });
+
   }
 
   public clearArrays() {
@@ -46,6 +60,29 @@ export class FlashcardsComponent implements OnInit {
     this.word = <any>{};
   }
 
+  editWord(polish: string, english: string, id: string, categoryId: string) {
+    this.clearArrays()
+      this.polish = polish;
+      this.english = english;
+      this.id = id;
+      this.categoryId = categoryId;
+      console.log(this.polish, this.english, this.id, this.categoryId);
+  }
+
+  putWord(polish: string, english: string) {
+    this.clearArrays()
+      const Id = this.id;
+    this.flashcardService.putWord(polish, english, Id, this.categoryId)
+      .subscribe(category => {
+      this.polish = '';
+      this.english = '';
+      this.id = '';
+      this.categoryId = '';
+      }, err => {
+        console.error(err);
+      });
+  }
+
   editCategory(name: string, id: string) {
     this.clearArrays()
       this.name = name;
@@ -53,28 +90,14 @@ export class FlashcardsComponent implements OnInit {
       console.log(this.name, this.id);
   }
 
-  putCategory(name: string, id) {
+  putCategory(nameEdit: string, id) {
     this.clearArrays()
-      this.name = name;
       const Id = this.id;
       console.log(this.name, Id);
-    this.flashcardService.putCategory(name, Id)
+    this.flashcardService.putCategory(nameEdit, Id)
       .subscribe(category => {
       this.name = '';
-      }, err => {
-        console.error(err);
-      });
-  }
-
-  showCategories() {
-    this.clearArrays()
-    this.flashcardService.getCategories()
-      .subscribe(categories => {
-        console.log(categories);
-        categories.forEach(category => {
-          const newCategory = new Category(category.name, category._id);
-          this.allCategoriesForm.push(newCategory);
-        });
+      this.categoryId = undefined;
       }, err => {
         console.error(err);
       });
@@ -89,6 +112,7 @@ export class FlashcardsComponent implements OnInit {
           const newCategory = new Category(word.category[0].name, word.category[0]._id);
           const newWord = new Word(word.polish, word.english, newCategory, word.known, word._id);
           this.flashcards.push(newWord);
+      this.categoryId = undefined;
         });
       }, err => {
         console.error(err);
@@ -103,6 +127,7 @@ export class FlashcardsComponent implements OnInit {
         categories.forEach(category => {
           const newCategory = new Category(category.name, category._id);
           this.allCategories.push(newCategory);
+      this.categoryId = undefined;
         });
       }, err => {
         console.error(err);
@@ -119,6 +144,7 @@ export class FlashcardsComponent implements OnInit {
           const newCategory = new Category(word.category[0].name, word.category[0]._id);
           const newWord = new Word(word.polish, word.english, newCategory, word.known, word._id);
           this.allWords.push(newWord);
+      this.categoryId = undefined;
         });
       }, err => {
         console.error(err);
@@ -132,6 +158,7 @@ export class FlashcardsComponent implements OnInit {
       console.log(category);
           const newCategory = new Category(category.name, category._id);
           this.category = newCategory;
+      this.categoryId = undefined;
       }, err => {
         console.error(err);
       });
@@ -145,6 +172,7 @@ export class FlashcardsComponent implements OnInit {
           const newCategory = new Category(word.category[0].name, word.category[0]._id);
           const newWord = new Word(word.polish, word.english, newCategory, word.known, word._id);
           this.word = newWord;
+      this.categoryId = undefined;
       }, err => {
         console.error(err);
       });
@@ -155,19 +183,21 @@ export class FlashcardsComponent implements OnInit {
     this.flashcardService.postCategory(name)
       .subscribe(category => {
       this.name = '';
+      this.categoryId = undefined;
       }, err => {
         console.error(err);
       });
   }
 
-  postWord(polish: string, english: string, categoryId: string) {
+  postWord(polish: string, english: string) {
     this.clearArrays()
-    this.flashcardService.postWord(polish, english, categoryId)
+    this.flashcardService.postWord(polish, english, this.categoryId)
       .subscribe(word => {
-      console.log(polish, english, categoryId);
+      console.log(polish, english);
       this.polish = '';
       this.english = '';
       this.allCategoriesForm = [];
+      this.categoryId = undefined;
       }, err => {
         console.error(err);
       });

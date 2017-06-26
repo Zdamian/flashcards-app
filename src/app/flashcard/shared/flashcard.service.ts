@@ -4,6 +4,7 @@ import { Http, Headers, Response, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/throw';
 
 export interface ICategory {
   _id: string;
@@ -85,7 +86,15 @@ export class FlashcardService {
 
     const url = this.getUrl('categories', id);
     return this.http.put(url, {name: name})
-      .map(res => <ICategory[]>res.json())
+      .map(res => <ICategory>res.json())
+      .catch(this.handleError);
+  }
+
+  public putWord(polish: string, english: string, id: string, categoryId: string): Observable<IWord> {
+
+    const url = this.getUrl('words', id);
+    return this.http.put(url, {polish: polish, english: english, categoryId: categoryId})
+      .map(res => <IWord>res.json())
       .catch(this.handleError);
   }
 
