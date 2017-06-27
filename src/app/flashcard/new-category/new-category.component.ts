@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MdInputModule } from '@angular/material';
+import { MdSnackBar } from '@angular/material';
 
 import { FlashcardService } from '../shared/flashcard.service';
 import { Category } from '../shared/category';
@@ -16,7 +17,7 @@ export class NewCategoryComponent implements OnInit {
 
   public categoryId: string;
 
-  constructor(private flashcardService: FlashcardService) { }
+  constructor(private flashcardService: FlashcardService, public snackBar: MdSnackBar) { }
 
   ngOnInit() {
   }
@@ -26,9 +27,23 @@ export class NewCategoryComponent implements OnInit {
       .subscribe(category => {
         this.name = '';
         this.categoryId = undefined;
+        this.openSnackBar();
       }, err => {
         console.error(err);
+        this.openSnackBarFail();
       });
+  }
+
+  openSnackBar() {
+    this.snackBar.open('A new category added', '', {
+      duration: 2000,
+    });
+  }
+
+  openSnackBarFail() {
+    this.snackBar.open('You must fill in field of category', '', {
+      duration: 2000,
+    });
   }
 
 }

@@ -1,15 +1,33 @@
-<p>
-  <button md-raised-button *ngFor="let category of allCategories" (click)="getFlashcards(category.name)">Get {{ category.name }}</button>
-</p>
+<!--Add category-->
+<div class="background">
+  <div class="a">
+  <div class="flex-center">
+    <md-grid-list cols="4" rowHeight="1:1">
+      <md-grid-tile *ngFor="let category of allCategories">
+        <md-card class="example-card" (click)="getFlashcards(category.name)">
+          <md-card-content>
+            <p>
+              {{ category.name }}
+            </p>
+          </md-card-content>
+        </md-card>
+      </md-grid-tile>
+    </md-grid-list>
 
-<!--List of all words of chosen category-->
-<md-list>
-  <md-list-item *ngFor="let card of flashcards"
-    [ngClass]="{'known': card.known, 'unknown': !card.known}">
-    <span>{{ card.polish }}</span>
-    -
-    <span>{{ card.english }}</span>
-    <span>{{ card.known }}</span>
-    <span>{{ card.category.name }}</span>
-  </md-list-item>
-</md-list>
+    <!--List of all words of chosen category-->
+    <md-list>
+      <md-list-item *ngFor="let card of flashcards"
+        [ngClass]="{'known': card.known, 'unknown': !card.known}">
+        <span>{{ card.polish }}</span>
+        -
+        <span>{{ card.english }}</span>
+        <span>{{ card.known }}</span>
+        <span>{{ card.category.name }}</span>
+      </md-list-item>
+    </md-list>
+  </div>
+  </div>
+  <footer>
+    <p class="center-align">© 2017 All rights reserved<p>
+  </footer>
+</div>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MdInputModule } from '@angular/material';
+import { MdSnackBar } from '@angular/material';
 
 import { FlashcardService } from '../shared/flashcard.service';
 import { Category } from '../shared/category';
@@ -24,7 +25,7 @@ export class NewWordComponent implements OnInit {
 
   public categoryId: string;
 
-  constructor(private flashcardService: FlashcardService) { }
+  constructor(private flashcardService: FlashcardService, public snackBar: MdSnackBar) { }
 
   ngOnInit() {
     this.getCategories();
@@ -62,7 +63,7 @@ export class NewWordComponent implements OnInit {
   }
 
   postWord(polish: string, english: string) {
-    this.clearArrays()
+    this.clearArrays();
     this.flashcardService.postWord(polish, english, this.categoryId)
       .subscribe(word => {
         console.log(polish, english);
@@ -71,9 +72,23 @@ export class NewWordComponent implements OnInit {
         this.categoryId = undefined;
         this.allCategoriesForm = [];
         this.getCategories();
+        this.openSnackBar();
       }, err => {
         console.error(err);
+        this.openSnackBarFail();
       });
+  }
+
+  openSnackBar() {
+    this.snackBar.open('A new word added', '', {
+      duration: 2000,
+    });
+  }
+
+  openSnackBarFail() {
+    this.snackBar.open('You must fill in all fields', '', {
+      duration: 2000,
+    });
   }
 
 }
