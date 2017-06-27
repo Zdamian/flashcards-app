@@ -1,16 +1,16 @@
 <h1> flashcards works! </h1>
 <p>
-  <button *ngFor="let category of allCategories" (click)="getFlashcards(category.name)">Get {{ category.name }}</button>
+  <button md-raised-button *ngFor="let category of allCategories" (click)="getFlashcards(category.name)">Get {{ category.name }}</button>
 </p>
 
 <!--List of all words of chosen category-->
-<ul>
-  <li *ngFor="let card of flashcards"
+<md-list>
+  <md-list-item *ngFor="let card of flashcards"
     [ngClass]="{'known': card.known, 'unknown': !card.known}">
     <span>{{ card.polish }}</span>
     -
     <span>{{ card.english }}</span>
     <span>{{ card.known }}</span>
     <span>{{ card.category.name }}</span>
-  </li>
-</ul>
+  </md-list-item>
+</md-list>

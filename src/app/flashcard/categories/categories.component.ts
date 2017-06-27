@@ -114,6 +114,7 @@ export class CategoriesComponent implements OnInit {
 
   removeMessage() {
     this.message = '';
+    this.getCategories();
   }
 
 }

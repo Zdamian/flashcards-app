@@ -19,3 +19,13 @@
 .example-full-width {
   width: 100%;
 }
+
+.example-container {
+  width: 500px;
+}
+
+.example-button-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
