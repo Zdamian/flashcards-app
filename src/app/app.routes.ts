@@ -2,9 +2,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { FlashcardsComponent } from './flashcard/flashcards/flashcards.component';
+import { HomePageComponent } from './flashcard/home-page/home-page.component';
 import { NewWordComponent } from './flashcard/new-word/new-word.component';
 import { NewCategoryComponent } from './flashcard/new-category/new-category.component';
+import { FlashcardsComponent } from './flashcard/flashcards/flashcards.component';
 import { CategoriesComponent } from './flashcard/categories/categories.component';
 import { WordsComponent } from './flashcard/words/words.component';
 
@@ -12,12 +13,12 @@ import { WordsComponent } from './flashcard/words/words.component';
 const appRoutes: Routes = [
     {
         path: '',
-        redirectTo: '/flashcards',
+        redirectTo: '/home-page',
         pathMatch: 'full'
     },
     {
-        path: 'flashcards',
-        component: FlashcardsComponent,
+        path: 'home-page',
+        component: HomePageComponent,
     },
     {
         path: 'new-word',
@@ -26,6 +27,10 @@ const appRoutes: Routes = [
     {
         path: 'new-category',
         component: NewCategoryComponent,
+    },
+    {
+        path: 'flashcards',
+        component: FlashcardsComponent,
     },
     {
         path: 'categories',

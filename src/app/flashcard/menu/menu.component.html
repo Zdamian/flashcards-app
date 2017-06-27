@@ -1,12 +1,15 @@
 <div class="example-container">
   <div class="example-button-row">
-    <a md-button routerLink="/flashcards" routerLinkActive="active">flashcards</a>
+    <div class="example-tooltip-host" mdTooltip="Home Page" [mdTooltipPosition]="position">
+      <a md-mini-fab routerLink="/home-page" routerLinkActive="active"><md-icon>home</md-icon></a>
+    </div>
     <div class="example-tooltip-host" mdTooltip="Add new word" [mdTooltipPosition]="position">
       <a md-button routerLink="/new-word" routerLinkActive="active">Add Word</a>
     </div>
     <div class="example-tooltip-host" mdTooltip="Add new category" [mdTooltipPosition]="position">
       <a md-button routerLink="/new-category" routerLinkActive="active">Add Category</a>
     </div>
+    <a md-button routerLink="/flashcards" routerLinkActive="active">flashcards</a>
     <a md-button routerLink="/categories" routerLinkActive="active">Categories</a>
     <a md-button routerLink="/words" routerLinkActive="active">Words</a>
   </div>

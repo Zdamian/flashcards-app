@@ -13,6 +13,7 @@ import { WordsComponent } from './words/words.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { NewWordComponent } from './new-word/new-word.component';
 import { NewCategoryComponent } from './new-category/new-category.component';
+import { HomePageComponent } from './home-page/home-page.component';
 
 @NgModule({
   imports: [
@@ -32,7 +33,7 @@ import { NewCategoryComponent } from './new-category/new-category.component';
     MdButtonModule,
     MdCheckboxModule
   ],
-  declarations: [FlashcardsComponent, MenuComponent, WordsComponent, CategoriesComponent, NewWordComponent, NewCategoryComponent],
+  declarations: [FlashcardsComponent, MenuComponent, WordsComponent, CategoriesComponent, NewWordComponent, NewCategoryComponent, HomePageComponent],
   providers: [
     FlashcardService
   ]
