@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { FlashcardsComponent } from './flashcard/flashcards/flashcards.component';
 import { NewWordComponent } from './flashcard/new-word/new-word.component';
+import { NewCategoryComponent } from './flashcard/new-category/new-category.component';
 import { CategoriesComponent } from './flashcard/categories/categories.component';
 import { WordsComponent } from './flashcard/words/words.component';
 
@@ -21,6 +22,10 @@ const appRoutes: Routes = [
     {
         path: 'new-word',
         component: NewWordComponent,
+    },
+    {
+        path: 'new-category',
+        component: NewCategoryComponent,
     },
     {
         path: 'categories',

@@ -12,6 +12,7 @@ import { MenuComponent } from './menu/menu.component';
 import { WordsComponent } from './words/words.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { NewWordComponent } from './new-word/new-word.component';
+import { NewCategoryComponent } from './new-category/new-category.component';
 
 @NgModule({
   imports: [
@@ -31,7 +32,7 @@ import { NewWordComponent } from './new-word/new-word.component';
     MdButtonModule,
     MdCheckboxModule
   ],
-  declarations: [FlashcardsComponent, MenuComponent, WordsComponent, CategoriesComponent, NewWordComponent],
+  declarations: [FlashcardsComponent, MenuComponent, WordsComponent, CategoriesComponent, NewWordComponent, NewCategoryComponent],
   providers: [
     FlashcardService
   ]
