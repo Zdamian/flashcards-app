@@ -1,0 +1,27 @@
+<!--Add category-->
+<div>
+  <input type="text" placeholder="e.g home" [(ngModel)]="name">
+  <button (click)="postCategory(name)">Add New Category</button>
+  <button (click)="putCategory(name)">Edit Category</button>
+</div>
+
+<!--List of all categories-->
+<ul>
+  <li *ngFor="let category of allCategories">
+    <span (click)="getCategory(category.id)">{{ category.name }}</span>
+  </li>
+</ul>
+
+<!--Chosen category-->
+<ul *ngIf="category.name">
+  <li>
+    <span>{{ category.name }}</span>
+      <span (click)="editCategory(category.name, category.id)">Edit</span>
+      <span (click)="deleteCategory(category.id)">X</span>
+  </li>
+</ul>
+
+<!--Delete message-->
+<div *ngIf="message.length > 0" class="message" (click)="removeMessage()">
+  <p>{{ message }}</p>
+</div>

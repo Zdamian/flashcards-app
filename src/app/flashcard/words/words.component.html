@@ -1,0 +1,35 @@
+<!--Add word-->
+<div>
+  <input type="text" placeholder="e.g house" [(ngModel)]="english">
+  <input type="text" placeholder="e.g dom" [(ngModel)]="polish">
+  <select [(ngModel)]="categoryId">
+    <option *ngFor="let category of allCategoriesForm" [value]="category.id">
+      {{ category.name }}
+    </option>
+  </select>
+  <button (click)="postWord(polish, english)">Add New Word</button>
+  <button (click)="putWord(polish, english)">Edit Word</button>
+</div>
+
+<!--List of all words-->
+<ul>
+  <li *ngFor="let word of allWords"
+    [ngClass]="{'known': word.known, 'unknown': !word.known}">
+    <div (click)="getWord(word.id)">
+      <span>{{ word.polish }}</span>
+      -
+      <span>{{ word.english }}</span>
+    </div>
+  </li>
+</ul>
+
+<!--Chosen word-->
+<ul *ngIf="word.polish">
+  <li>
+      <span>{{ word.polish }}</span>
+      -
+      <span>{{ word.english }}</span>
+      <span (click)="editWord(word.polish, word.english, word.id, word.category.id)">Edit</span>
+      <span (click)="deleteWord(word.id)">X</span>
+  </li>
+</ul>
