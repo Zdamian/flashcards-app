@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MdButtonModule, MdCheckboxModule, MaterialModule } from '@angular/material';
 
 import { FlashcardsComponent } from './flashcards/flashcards.component';
 import { FlashcardService } from './shared/flashcard.service';
@@ -15,9 +17,19 @@ import { CategoriesComponent } from './categories/categories.component';
     CommonModule,
     HttpModule,
     FormsModule,
-    RouterModule
+    RouterModule,
+
+    BrowserAnimationsModule,
+    MdButtonModule,
+    MdCheckboxModule,
+    MaterialModule
   ],
-  exports: [FlashcardsComponent, MenuComponent],
+  exports: [
+    FlashcardsComponent,
+    MenuComponent,
+    MdButtonModule,
+    MdCheckboxModule
+  ],
   declarations: [FlashcardsComponent, MenuComponent, WordsComponent, CategoriesComponent],
   providers: [
     FlashcardService

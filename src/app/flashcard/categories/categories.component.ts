@@ -1,14 +1,17 @@
 import { Component, OnInit } from '@angular/core';
+import { MdInputModule } from '@angular/material';
 
 import { FlashcardService } from '../shared/flashcard.service';
 import { Category } from '../shared/category';
 import { Word } from '../shared/word';
+
 
 @Component({
   selector: 'app-categories',
   templateUrl: './categories.component.html',
   styleUrls: ['./categories.component.scss']
 })
+
 export class CategoriesComponent implements OnInit {
 
   public allCategories: Category[] = [];

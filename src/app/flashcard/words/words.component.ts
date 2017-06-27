@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MdInputModule } from '@angular/material';
 
 import { FlashcardService } from '../shared/flashcard.service';
 import { Category } from '../shared/category';

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MdInputModule } from '@angular/material';
 
 @Component({
   selector: 'app-menu',
