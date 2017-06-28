@@ -8,6 +8,7 @@ import { NewCategoryComponent } from './flashcard/new-category/new-category.comp
 import { FlashcardsComponent } from './flashcard/flashcards/flashcards.component';
 import { CategoriesComponent } from './flashcard/categories/categories.component';
 import { WordsComponent } from './flashcard/words/words.component';
+import { FlashcardsLearnComponent } from './flashcard/flashcards-learn/flashcards-learn.component';
 
 
 const appRoutes: Routes = [
@@ -39,6 +40,10 @@ const appRoutes: Routes = [
     {
         path: 'words',
         component: WordsComponent,
+    },
+    {
+        path: 'flashcards-learn',
+        component: FlashcardsLearnComponent,
     }
 ];
 

@@ -16,6 +16,7 @@ import { NewCategoryComponent } from './new-category/new-category.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { DialogComponent } from './dialog/dialog/dialog.component';
 import { DialogModule } from './dialog/dialog.module';
+import { FlashcardsLearnComponent } from './flashcards-learn/flashcards-learn.component';
 
 @NgModule({
   imports: [
@@ -44,7 +45,8 @@ import { DialogModule } from './dialog/dialog.module';
     CategoriesComponent,
     NewWordComponent,
     NewCategoryComponent,
-    HomePageComponent
+    HomePageComponent,
+    FlashcardsLearnComponent
   ],
   providers: [
     FlashcardService

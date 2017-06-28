@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { DialogComponent } from './dialog/dialog.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MdButtonModule, MdCheckboxModule, MaterialModule } from '@angular/material';
@@ -10,7 +11,8 @@ import { MdButtonModule, MdCheckboxModule, MaterialModule } from '@angular/mater
     BrowserAnimationsModule,
     MdButtonModule,
     MdCheckboxModule,
-    MaterialModule
+    MaterialModule,
+    RouterModule
   ],
   exports: [
     DialogComponent,

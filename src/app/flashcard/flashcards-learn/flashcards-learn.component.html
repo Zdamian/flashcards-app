@@ -1,0 +1,19 @@
+<!--Add category-->
+<div class="background">
+  <div class="flex-center">
+    <md-grid-list cols="4" rowHeight="1:1">
+      <md-grid-tile *ngFor="let word of allWords">
+        <md-card class="example-card" (click)="changeWord($event.target, word.id, word.english, word.polish)">
+          <md-card-content>
+            <p>
+              {{ word.polish }}
+            </p>
+          </md-card-content>
+        </md-card>
+      </md-grid-tile>
+    </md-grid-list>
+  </div>
+  <footer>
+    <p class="center-align">© 2017 All rights reserved<p>
+  </footer>
+</div>
