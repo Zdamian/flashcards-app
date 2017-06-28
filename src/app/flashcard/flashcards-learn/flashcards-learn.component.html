@@ -3,12 +3,24 @@
   <div class="flex-center">
     <md-grid-list cols="4" rowHeight="1:1">
       <md-grid-tile *ngFor="let word of allWords">
-        <md-card class="example-card" (click)="changeWord($event.target, word.id, word.english, word.polish)">
-          <md-card-content>
+        <md-card class="example-card">
+          <md-card-content (click)="changeWord($event.target, word.english, word.polish)">
             <p>
               {{ word.polish }}
             </p>
           </md-card-content>
+          <md-card-actions>
+            <section class="example-section">
+              <span class="example-tooltip-host" mdTooltip="{{ word.known === false? 'Mark if You know this word' : 'Mark if You do not know this word' }}" [mdTooltipPosition]="position">
+                <md-slide-toggle
+                    class="example-margin"
+                    [color]="color"
+                    [checked]="word.known"
+                    [disabled]="disabled">
+                </md-slide-toggle>
+              </span>
+            </section>
+          </md-card-actions>
         </md-card>
       </md-grid-tile>
     </md-grid-list>

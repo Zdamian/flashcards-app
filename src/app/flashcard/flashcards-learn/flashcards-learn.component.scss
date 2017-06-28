@@ -30,12 +30,11 @@
         }
     }
 
-    md-card-content {
-        height: 100%;
+    md-card {
 
         p {
             font-size: 20px;
-            line-height: 200px;
+            line-height: 160px;
         }
     }
 
@@ -49,4 +48,15 @@
     .center-align {
         text-align: center;
     }
+}
+
+.example-section {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  height: 60px;
+}
+
+.example-margin {
+  margin: 10px;
 }

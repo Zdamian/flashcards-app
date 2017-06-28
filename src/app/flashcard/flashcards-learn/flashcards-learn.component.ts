@@ -17,6 +17,14 @@ export class FlashcardsLearnComponent implements OnInit {
 
   public categoryId: string;
 
+  public color = 'primary';
+
+  public checked = false;
+
+  public disabled = false;
+
+  public position = 'below';
+
   constructor(private flashcardService: FlashcardService) { }
 
   ngOnInit() {
@@ -33,21 +41,18 @@ export class FlashcardsLearnComponent implements OnInit {
       });
   }
 
-  changeWord(element, id: string, english: string, polish: string) {
-    this.flashcardService.getWord(id)
-      .subscribe(word => {
-        console.log(word);
-        const newCategory = new Category(word.category[0].name, word.category[0]._id);
-        const newWord = new Word(word.polish, word.english, newCategory, word.known, word._id);
-        this.word = newWord;
-        this.categoryId = undefined;
+  changeWord(element, english: string, polish: string) {
+    if (element.textContent === english) {
+      element.textContent = polish;
+    } else {
+      element.textContent = english;
+    }
+  }
 
-        if (element.textContent === english) {
-          element.textContent = polish;
-        } else {
-          element.textContent = english;
-        }
-
+  toggleKnown(polish: string, english: string, id: string, known: boolean) {
+    this.flashcardService.putWord(polish, english, id, '594f8025650e7d7bf081adf9')
+      .subscribe(category => {
+        console.log('updated')
       }, err => {
         console.error(err);
       });
