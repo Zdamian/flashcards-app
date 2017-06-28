@@ -1,6 +1,7 @@
 .example-card {
-  width: 200px;
-  height: 200px;
+  box-sizing: border-box;
+  width: 250px;
+  height: 250px;
 
   p {
       text-align: center;
@@ -16,9 +17,18 @@
     padding-top: 10vh;
 
     .flex-center {
+        // display: flex;
+        // justify-content: center;
+        // flex-direction: column;
+        // height: 80vh;
+        // width: 80vw;
+        // margin: 0 auto;
+        // overflow: auto;
+
         display: flex;
-        justify-content: center;
-        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        flex-direction: row;
         height: 80vh;
         width: 80vw;
         margin: 0 auto;
@@ -27,6 +37,18 @@
         md-grid-list {
             padding-bottom: 0 !important;
             height: 80vh;
+        }
+
+        ul {
+            display: flex;
+            flex-direction: row;
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+            overflow: hidden;
+            li {
+                display: flex
+            }
         }
     }
 

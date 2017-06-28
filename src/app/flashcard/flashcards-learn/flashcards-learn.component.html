@@ -1,29 +1,43 @@
 <!--Add category-->
 <div class="background">
   <div class="flex-center">
-    <md-grid-list cols="4" rowHeight="1:1">
-      <md-grid-tile *ngFor="let word of allWords">
-        <md-card class="example-card">
-          <md-card-content (click)="changeWord($event.target, word.english, word.polish)">
-            <p>
-              {{ word.polish }}
-            </p>
-          </md-card-content>
-          <md-card-actions>
-            <section class="example-section">
-              <span class="example-tooltip-host" mdTooltip="{{ word.known === false? 'Mark if You know this word' : 'Mark if You do not know this word' }}" [mdTooltipPosition]="position">
-                <md-slide-toggle
+    <button
+      md-fab
+      [disabled]="!isPreviousBtnVisible"
+      (click)="next(-1)"><md-icon>keyboard_arrow_left</md-icon></button>
+    <ul>
+      <ng-container *ngFor="let word of allWords; let id = index;">
+        <li
+          *ngIf="currentId === id"
+          [@cardAnimation]="stateAnimation">
+          <md-card class="example-card">
+            <md-card-content (click)="changeWord($event.target, word.english, word.polish)">
+              <p>
+                {{ word.polish }}
+              </p>
+            </md-card-content>
+            <md-card-actions>
+              <section class="example-section">
+                <span class="example-tooltip-host" mdTooltip="{{ word.known === false? 'Mark if You know this word' : 'Mark if You do not know this word' }}" [mdTooltipPosition]="position">
+                  <md-slide-toggle
                     class="example-margin"
                     [color]="color"
                     [checked]="word.known"
-                    [disabled]="disabled">
-                </md-slide-toggle>
-              </span>
-            </section>
-          </md-card-actions>
-        </md-card>
-      </md-grid-tile>
-    </md-grid-list>
+                    [disabled]="disabled"
+                    
+                    (change)="onSlideToggleChange(word.id, $event)">
+                  </md-slide-toggle>
+                </span>
+              </section>
+            </md-card-actions>
+          </md-card>
+        </li>
+      </ng-container>
+    </ul>
+    <button
+      md-fab
+      [disabled]="!isNextBtnVisible"
+      (click)="next(1)"><md-icon>keyboard_arrow_right</md-icon></button>
   </div>
   <footer>
     <p class="center-align">© 2017 All rights reserved<p>

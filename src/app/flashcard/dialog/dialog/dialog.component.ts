@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import {MD_DIALOG_DATA} from '@angular/material';
+import { MD_DIALOG_DATA } from '@angular/material';
 import { MdInputModule } from '@angular/material';
+import * as _ from 'underscore';
 
 import { FlashcardService } from '../../shared/flashcard.service';
 import { Category } from '../../shared/category';
@@ -70,7 +71,10 @@ export class DialogComponent implements OnInit {
 
   deleteWord(id: string) {
     this.flashcardService.deleteWord(id)
-      .subscribe(word => {
+      .subscribe(res => {
+        const removedWord = _(this.flashcards).findWhere({id: id});
+        const removedWordId = _(this.flashcards).indexOf(removedWord);
+        this.flashcards.splice(removedWordId, 1);
         this.words = [];
       }, err => {
         console.error(err);
