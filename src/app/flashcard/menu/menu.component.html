@@ -1,7 +1,21 @@
-<div class="example-container">
-  <div class="example-button-row">
-    <a md-button routerLink="/flashcards" routerLinkActive="active">flashcards</a>
-    <a md-button routerLink="/categories" routerLinkActive="active">Categories</a>
-    <a md-button routerLink="/words" routerLinkActive="active">Words</a>
-  </div>
-</div>
+<md-toolbar color="primary" class="example-container">
+    <span class="example-tooltip-host" mdTooltip="Home Page" [mdTooltipPosition]="position">
+      <a md-mini-fab routerLink="/home-page" routerLinkActive="active"><md-icon>home</md-icon></a>
+    </span>
+    <span class="example-tooltip-host" mdTooltip="Add new word" [mdTooltipPosition]="position">
+      <a md-button routerLink="/new-word" routerLinkActive="active">Add Word</a>
+    </span>
+    <span class="example-tooltip-host" mdTooltip="Add new category" [mdTooltipPosition]="position">
+      <a md-button routerLink="/new-category" routerLinkActive="active">Add Category</a>
+    </span>
+    <span>
+      <a md-button routerLink="/flashcards" routerLinkActive="active">Flashcards</a>
+    </span>
+    <span class="example-spacer"></span>
+    <span class="example-tooltip-host" mdTooltip="Categories" [mdTooltipPosition]="position">
+      <a md-mini-fab routerLink="/categories" routerLinkActive="active"><md-icon class="example-icon">list</md-icon></a>
+    </span>
+    <span class="example-tooltip-host" mdTooltip="Words" [mdTooltipPosition]="position">
+      <a md-mini-fab routerLink="/words" routerLinkActive="active"><md-icon class="example-icon">list</md-icon></a>
+    </span>
+</md-toolbar>

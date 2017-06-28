@@ -1,0 +1,26 @@
+<!--Add word-->
+<div class="background">
+  <div class="flex-center">
+    <form class="example-form">
+      <md-input-container class="example-full-width">
+        <input mdInput type="text" placeholder="English" [(ngModel)]="english" [ngModelOptions]="{standalone: true}">
+      </md-input-container>
+      <md-input-container class="example-full-width">
+        <input mdInput type="text" placeholder="Polish" [(ngModel)]="polish" [ngModelOptions]="{standalone: true}">
+      </md-input-container>
+      <md-select placeholder="Choose Category" [(ngModel)]="categoryId" [ngModelOptions]="{standalone: true}">
+        <md-option *ngFor="let category of allCategoriesForm" [value]="category.id">
+          {{ category.name }}
+        </md-option>
+      </md-select>
+    </form>
+    <div class="example-container">
+      <div class="example-button-row">
+        <button md-raised-button (click)="postWord(polish, english)">Add New Word</button>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <p class="center-align">© 2017 All rights reserved<p>
+  </footer>
+</div>

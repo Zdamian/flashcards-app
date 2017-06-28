@@ -11,6 +11,12 @@ import { FlashcardService } from './shared/flashcard.service';
 import { MenuComponent } from './menu/menu.component';
 import { WordsComponent } from './words/words.component';
 import { CategoriesComponent } from './categories/categories.component';
+import { NewWordComponent } from './new-word/new-word.component';
+import { NewCategoryComponent } from './new-category/new-category.component';
+import { HomePageComponent } from './home-page/home-page.component';
+import { DialogComponent } from './dialog/dialog/dialog.component';
+import { DialogModule } from './dialog/dialog.module';
+import { FlashcardsLearnComponent } from './flashcards-learn/flashcards-learn.component';
 
 @NgModule({
   imports: [
@@ -22,17 +28,29 @@ import { CategoriesComponent } from './categories/categories.component';
     BrowserAnimationsModule,
     MdButtonModule,
     MdCheckboxModule,
-    MaterialModule
+    MaterialModule,
+    DialogModule
   ],
   exports: [
     FlashcardsComponent,
     MenuComponent,
     MdButtonModule,
-    MdCheckboxModule
+    MdCheckboxModule,
+    DialogModule
   ],
-  declarations: [FlashcardsComponent, MenuComponent, WordsComponent, CategoriesComponent],
+  declarations: [
+    FlashcardsComponent,
+    MenuComponent,
+    WordsComponent,
+    CategoriesComponent,
+    NewWordComponent,
+    NewCategoryComponent,
+    HomePageComponent,
+    FlashcardsLearnComponent
+  ],
   providers: [
     FlashcardService
-  ]
+  ],
+  entryComponents: [DialogComponent]
 })
 export class FlashcardModule { }
