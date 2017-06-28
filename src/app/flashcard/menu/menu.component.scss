@@ -1,15 +1,16 @@
 .example-container {
-  width: 600px;
   position: absolute;
-  top: 20px;
-  left: 20px;
+  top: 0;
+  left: 0;
   z-index: 1000;
 }
 
-.example-button-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
+.example-icon {
+  padding: 0 14px;
+}
+
+.example-spacer {
+  flex: 1 1 auto;
 }
 
 .example-tooltip-host {
