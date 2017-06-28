@@ -3,11 +3,12 @@
   <p>you have {{ flashcards.length }} {{ flashcards.length === 1? 'word' : 'words' }} in this category</p>
   <button md-raised-button (click)="preview()">Preview</button>
   <button md-raised-button routerLink="/flashcards-learn" routerLinkActive="active" md-dialog-close>Go to learn</button>
+  <button md-mini-fab (click)="deleteCategory(category.id)" md-dialog-close><md-icon>remove</md-icon></button>
 </div>
 
 <div *ngIf="words.length > 0">
   <h3>{{ category.name }}</h3>
-  <p *ngFor="let word of words">{{ word.polish }}</p>
+  <p *ngFor="let word of words">{{ word.polish }} - {{ word.english }} <button md-mini-fab (click)="deleteWord(word.id)"><md-icon>remove</md-icon></button></p>
   <button md-raised-button (click)="toGridDetails()">Back</button>
   <button md-raised-button routerLink="/flashcards-learn" routerLinkActive="active" md-dialog-close>Go to learn</button>
 </div>

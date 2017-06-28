@@ -24,7 +24,7 @@ export class DialogComponent implements OnInit {
   constructor(private flashcardService: FlashcardService, @Inject(MD_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
-    this.flashcardService.getCategory(this.data.id)
+      this.flashcardService.getCategory(this.data.id)
       .subscribe(category => {
         const newCategory = new Category(category.name, category._id);
         this.category = newCategory;
@@ -55,6 +55,23 @@ export class DialogComponent implements OnInit {
           this.words.push(newWord);
           this.categoryId = undefined;
         });
+      }, err => {
+        console.error(err);
+      });
+  }
+
+  deleteCategory(id: string) {
+    this.flashcardService.deleteCategory(id)
+      .subscribe(category => {
+      }, err => {
+        console.error(err);
+      });
+  }
+
+  deleteWord(id: string) {
+    this.flashcardService.deleteWord(id)
+      .subscribe(word => {
+        this.words = [];
       }, err => {
         console.error(err);
       });
