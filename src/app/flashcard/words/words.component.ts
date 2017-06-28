@@ -93,7 +93,7 @@ export class WordsComponent implements OnInit {
   putWord(polish: string, english: string) {
     this.clearArrays()
     const Id = this.id;
-    this.flashcardService.putWord(polish, english, Id, this.categoryId)
+    this.flashcardService.putWord(Id, {polish: polish, english: english})
       .subscribe(category => {
         this.polish = '';
         this.english = '';
