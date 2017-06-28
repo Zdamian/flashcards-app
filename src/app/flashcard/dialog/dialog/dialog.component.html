@@ -1,0 +1,13 @@
+<div *ngIf="words.length === 0">
+  <h3>{{ category.name }}</h3>
+  <p>you have {{ flashcards.length }} {{ flashcards.length === 1? 'word' : 'words' }} in this category</p>
+  <button md-raised-button (click)="preview()">Preview</button>
+  <button md-raised-button >Go to learn</button>
+</div>
+
+<div *ngIf="words.length > 0">
+  <h3>{{ category.name }}</h3>
+  <p *ngFor="let word of words">{{ word.polish }}</p>
+  <button md-raised-button (click)="toGridDetails()">Back</button>
+  <button md-raised-button >Go to learn</button>
+</div>
