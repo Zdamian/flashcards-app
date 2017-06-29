@@ -25,7 +25,10 @@ export class NewWordComponent implements OnInit {
 
   public categoryId: string;
 
-  constructor(private flashcardService: FlashcardService, public snackBar: MdSnackBar) { }
+  constructor(
+    private flashcardService: FlashcardService,
+    public snackBar: MdSnackBar
+  ) { }
 
   ngOnInit() {
     this.getCategories();
@@ -80,13 +83,13 @@ export class NewWordComponent implements OnInit {
   }
 
   openSnackBar() {
-    this.snackBar.open('A new word added', '', {
+    this.snackBar.open('A new word added!', '', {
       duration: 2000,
     });
   }
 
   openSnackBarFail() {
-    this.snackBar.open('You must fill in all fields', '', {
+    this.snackBar.open('You must fill in all fields!', '', {
       duration: 2000,
     });
   }

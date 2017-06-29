@@ -10,6 +10,15 @@
         justify-content: center;
         flex-direction: column;
         height: 90vh;
+        color: grey;
+
+        h1 {
+            margin-bottom: 0;
+        }
+
+        h2 {
+            margin-top: 0;
+        }
     }
 
     footer {
@@ -17,6 +26,7 @@
         justify-content: center;
         align-items: flex-end;
         height: 10vh;
+        color: grey;
     }
 
     .center-align {

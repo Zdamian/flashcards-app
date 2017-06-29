@@ -35,13 +35,13 @@ export class NewCategoryComponent implements OnInit {
   }
 
   openSnackBar() {
-    this.snackBar.open('A new category added', '', {
+    this.snackBar.open('A new category added!', '', {
       duration: 2000,
     });
   }
 
   openSnackBarFail() {
-    this.snackBar.open('You must fill in field of category', '', {
+    this.snackBar.open('You must fill in field of category!', '', {
       duration: 2000,
     });
   }

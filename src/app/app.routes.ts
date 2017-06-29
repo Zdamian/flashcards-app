@@ -34,16 +34,16 @@ const appRoutes: Routes = [
         component: FlashcardsComponent,
     },
     {
+        path: 'flashcards/:category',
+        component: FlashcardsLearnComponent,
+    },
+    {
         path: 'categories',
         component: CategoriesComponent,
     },
     {
         path: 'words',
         component: WordsComponent,
-    },
-    {
-        path: 'flashcards-learn',
-        component: FlashcardsLearnComponent,
     }
 ];
 

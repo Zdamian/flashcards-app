@@ -1,6 +1,7 @@
 .example-card {
   width: 200px;
   height: 200px;
+  cursor: pointer;
 
   p {
       text-align: center;
@@ -44,6 +45,7 @@
         justify-content: center;
         align-items: flex-end;
         height: 10vh;
+        color: grey;
     }
 
     .center-align {

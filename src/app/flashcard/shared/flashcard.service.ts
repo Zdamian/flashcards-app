@@ -90,10 +90,15 @@ export class FlashcardService {
       .catch(this.handleError);
   }
 
-  public putWord(polish: string, english: string, id: string, categoryId: string): Observable<IWord> {
+  public putWord(id: string, payload: {
+    polish?: string;
+    english?: string;
+    known?: boolean;
+    categoryId?: string;
+  }): Observable<IWord> {
 
     const url = this.getUrl('words', id);
-    return this.http.put(url, {polish: polish, english: english, categoryId: categoryId})
+    return this.http.put(url, payload)
       .map(res => <IWord>res.json())
       .catch(this.handleError);
   }

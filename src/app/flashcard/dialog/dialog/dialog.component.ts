@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import {MD_DIALOG_DATA} from '@angular/material';
+import { MD_DIALOG_DATA } from '@angular/material';
 import { MdInputModule } from '@angular/material';
+import * as _ from 'underscore';
 
 import { FlashcardService } from '../../shared/flashcard.service';
 import { Category } from '../../shared/category';
@@ -21,9 +22,13 @@ export class DialogComponent implements OnInit {
 
   public categoryId: string;
 
+  public areWordsVisible: boolean;
+
   constructor(private flashcardService: FlashcardService, @Inject(MD_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
+      this.areWordsVisible = false;
+
       this.flashcardService.getCategory(this.data.id)
       .subscribe(category => {
         const newCategory = new Category(category.name, category._id);
@@ -44,10 +49,8 @@ export class DialogComponent implements OnInit {
       }, err => {
         console.error(err);
       });
-  }
 
-  preview() {
-    this.flashcardService.getFlashcards(this.data.name)
+      this.flashcardService.getFlashcards(this.data.name)
       .subscribe(words => {
         words.forEach(word => {
           const newCategory = new Category(word.category[0].name, word.category[0]._id);
@@ -60,24 +63,11 @@ export class DialogComponent implements OnInit {
       });
   }
 
-  deleteCategory(id: string) {
-    this.flashcardService.deleteCategory(id)
-      .subscribe(category => {
-      }, err => {
-        console.error(err);
-      });
-  }
-
-  deleteWord(id: string) {
-    this.flashcardService.deleteWord(id)
-      .subscribe(word => {
-        this.words = [];
-      }, err => {
-        console.error(err);
-      });
+  preview() {
+    this.areWordsVisible = true;
   }
 
   toGridDetails() {
-    this.words = [];
+    this.areWordsVisible = false;
   }
 }
