@@ -27,6 +27,14 @@ export class CategoriesComponent implements OnInit {
 
   public temp: string;
 
+  public color = 'primary';
+
+  public mode: string;
+
+  public value: number;
+
+  public isProgressVisible: boolean;
+
   constructor(
     private flashcardService: FlashcardService,
     public snackBar: MdSnackBar
@@ -38,12 +46,25 @@ export class CategoriesComponent implements OnInit {
     this.temp = '';
   }
 
+  showProgressBar() {
+    this.mode = 'indeterminate';
+    this.value = 100;
+    this.isProgressVisible = true;
+  }
+
+  hideProgressBar() {
+    this.mode = 'determinate';
+    this.value = 0;
+    this.isProgressVisible = false;
+  }
+
   clearArrays() {
     this.allCategories = [];
     this.category = <any>{};
   }
 
   getCategories() {
+    this.showProgressBar();
     this.clearArrays();
     this.flashcardService.getCategories()
       .subscribe(categories => {
@@ -53,8 +74,10 @@ export class CategoriesComponent implements OnInit {
           this.allCategories.push(newCategory);
           this.categoryId = undefined;
         });
+        this.hideProgressBar();
       }, err => {
         console.error(err);
+        this.hideProgressBar();
       });
   }
 
@@ -76,23 +99,24 @@ export class CategoriesComponent implements OnInit {
     this.name = name;
     this.id = id;
     this.temp = 'editing category';
-    console.log(this.name, this.id);
   }
 
   putCategory(nameEdit: string, id) {
     const Id = this.id;
-    console.log(this.name, Id);
+    this.clearArrays();
+    this.temp = '';
+    this.showProgressBar();
     this.flashcardService.putCategory(nameEdit, Id)
       .subscribe(category => {
         this.name = '';
-        this.temp = '';
-        this.clearArrays();
         this.openSnackBarEdit();
         this.categoryId = undefined;
         this.getCategories();
+        this.hideProgressBar();
       }, err => {
         console.error(err);
         this.openSnackBarFail();
+        this.hideProgressBar();
       });
   }
 
@@ -101,14 +125,20 @@ export class CategoriesComponent implements OnInit {
   }
 
   deleteCategory(id: string) {
+    this.clearArrays();
+    this.showProgressBar();
     this.temp = '';
     this.flashcardService.deleteCategory(id)
       .subscribe(category => {
-        console.log(id);
+        this.categoryId = undefined;
         this.getCategories();
+        this.hideProgressBar();
         this.openSnackBarDelete();
       }, err => {
         console.error(err);
+        this.categoryId = undefined;
+        this.getCategories();
+        this.hideProgressBar();
         this.openSnackBarDeleteFail();
       });
   }

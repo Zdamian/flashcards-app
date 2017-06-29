@@ -29,6 +29,14 @@ export class WordsComponent implements OnInit {
 
   public temp: string;
 
+  public color = 'primary';
+
+  public mode: string;
+
+  public value: number;
+
+  public isProgressVisible: boolean;
+
   constructor(
     private flashcardService: FlashcardService,
     public snackBar: MdSnackBar
@@ -42,12 +50,25 @@ export class WordsComponent implements OnInit {
     this.temp = '';
   }
 
+  showProgressBar() {
+    this.mode = 'indeterminate';
+    this.value = 100;
+    this.isProgressVisible = true;
+  }
+
+  hideProgressBar() {
+    this.mode = 'determinate';
+    this.value = 0;
+    this.isProgressVisible = false;
+  }
+
   clearArrays() {
     this.allWords = [];
     this.word = <any>{};
   }
 
   getCategories() {
+    this.showProgressBar();
     this.flashcardService.getCategories()
       .subscribe(categories => {
         console.log(categories);
@@ -55,8 +76,10 @@ export class WordsComponent implements OnInit {
           const newCategory = new Category(category.name, category._id);
           this.allCategoriesForm.push(newCategory);
         });
+        this.hideProgressBar();
       }, err => {
         console.error(err);
+        this.hideProgressBar();
       });
   }
 
@@ -100,6 +123,9 @@ export class WordsComponent implements OnInit {
   }
 
   putWord(polish: string, english: string) {
+    this.clearArrays();
+    this.temp = '';
+    this.showProgressBar();
     const Id = this.id;
     this.flashcardService.putWord(Id, {polish: polish, english: english})
       .subscribe(category => {
@@ -107,15 +133,15 @@ export class WordsComponent implements OnInit {
         this.english = '';
         this.id = '';
         this.categoryId = '';
-        this.clearArrays()
-        this.temp = '';
         this.allCategoriesForm = [];
         this.openSnackBarEdit();
         this.getWords();
         this.getCategories();
+        this.hideProgressBar();
       }, err => {
         console.error(err);
         this.openSnackBarFail();
+        this.hideProgressBar();
       });
   }
 
@@ -124,7 +150,8 @@ export class WordsComponent implements OnInit {
   }
 
   deleteWord(id: string) {
-    this.clearArrays()
+    this.clearArrays();
+    this.showProgressBar();
     this.temp = '';
     this.flashcardService.deleteWord(id)
       .subscribe(word => {
@@ -132,9 +159,14 @@ export class WordsComponent implements OnInit {
         this.getWords();
         this.getCategories();
         this.openSnackBarDelete();
+        this.hideProgressBar();
       }, err => {
         console.error(err);
+        this.allCategoriesForm = [];
+        this.getWords();
+        this.getCategories();
         this.openSnackBarFail();
+        this.hideProgressBar();
       });
   }
 
