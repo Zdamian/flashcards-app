@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MdInputModule } from '@angular/material';
+import { MdSnackBar } from '@angular/material';
 
 import { FlashcardService } from '../shared/flashcard.service';
 import { Category } from '../shared/category';
@@ -26,12 +27,39 @@ export class WordsComponent implements OnInit {
 
   public categoryId: string;
 
-  constructor(private flashcardService: FlashcardService) { }
+  public temp: string;
+
+  public color = 'primary';
+
+  public mode: string;
+
+  public value: number;
+
+  public isProgressVisible: boolean;
+
+  constructor(
+    private flashcardService: FlashcardService,
+    public snackBar: MdSnackBar
+  ) { }
 
   ngOnInit() {
     this.getWords();
 
     this.getCategories();
+
+    this.temp = '';
+  }
+
+  showProgressBar() {
+    this.mode = 'indeterminate';
+    this.value = 100;
+    this.isProgressVisible = true;
+  }
+
+  hideProgressBar() {
+    this.mode = 'determinate';
+    this.value = 0;
+    this.isProgressVisible = false;
   }
 
   clearArrays() {
@@ -40,6 +68,7 @@ export class WordsComponent implements OnInit {
   }
 
   getCategories() {
+    this.showProgressBar();
     this.flashcardService.getCategories()
       .subscribe(categories => {
         console.log(categories);
@@ -47,8 +76,10 @@ export class WordsComponent implements OnInit {
           const newCategory = new Category(category.name, category._id);
           this.allCategoriesForm.push(newCategory);
         });
+        this.hideProgressBar();
       }, err => {
         console.error(err);
+        this.hideProgressBar();
       });
   }
 
@@ -68,7 +99,8 @@ export class WordsComponent implements OnInit {
   }
 
   getWord(id: string) {
-    this.clearArrays()
+    this.temp = '';
+    this.word = <any>{};
     this.flashcardService.getWord(id)
       .subscribe(word => {
         console.log(word);
@@ -82,58 +114,78 @@ export class WordsComponent implements OnInit {
   }
 
   editWord(polish: string, english: string, id: string, categoryId: string) {
-    this.clearArrays()
     this.polish = polish;
     this.english = english;
     this.id = id;
     this.categoryId = categoryId;
+    this.temp = 'editing word';
     console.log(this.polish, this.english, this.id, this.categoryId);
   }
 
   putWord(polish: string, english: string) {
-    this.clearArrays()
+    this.clearArrays();
+    this.temp = '';
+    this.showProgressBar();
     const Id = this.id;
-    this.flashcardService.putWord(polish, english, Id, this.categoryId)
+    this.flashcardService.putWord(Id, {polish: polish, english: english})
       .subscribe(category => {
         this.polish = '';
         this.english = '';
         this.id = '';
         this.categoryId = '';
         this.allCategoriesForm = [];
+        this.openSnackBarEdit();
         this.getWords();
         this.getCategories();
+        this.hideProgressBar();
       }, err => {
         console.error(err);
+        this.openSnackBarFail();
+        this.hideProgressBar();
       });
   }
 
-  postWord(polish: string, english: string) {
-    this.clearArrays()
-    this.flashcardService.postWord(polish, english, this.categoryId)
-      .subscribe(word => {
-        console.log(polish, english);
-        this.polish = '';
-        this.english = '';
-        this.categoryId = undefined;
-        this.allCategoriesForm = [];
-        this.getWords();
-        this.getCategories();
-      }, err => {
-        console.error(err);
-      });
+  cancel(name: string) {
+    this.temp = '';
   }
 
   deleteWord(id: string) {
-    this.clearArrays()
+    this.clearArrays();
+    this.showProgressBar();
+    this.temp = '';
     this.flashcardService.deleteWord(id)
       .subscribe(word => {
-        console.log(id);
         this.allCategoriesForm = [];
         this.getWords();
         this.getCategories();
+        this.openSnackBarDelete();
+        this.hideProgressBar();
       }, err => {
         console.error(err);
+        this.allCategoriesForm = [];
+        this.getWords();
+        this.getCategories();
+        this.openSnackBarFail();
+        this.hideProgressBar();
       });
+  }
+
+  openSnackBarDelete() {
+    this.snackBar.open('Word deleted!', '', {
+      duration: 2000,
+    });
+  }
+
+  openSnackBarEdit() {
+    this.snackBar.open('Word updated!', '', {
+      duration: 2000,
+    });
+  }
+
+  openSnackBarFail() {
+    this.snackBar.open('Something is wrong!', '', {
+      duration: 2000,
+    });
   }
 
 }

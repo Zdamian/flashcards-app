@@ -8,6 +8,8 @@ import { MdInputModule } from '@angular/material';
 })
 export class MenuComponent implements OnInit {
 
+  position = 'below';
+
   constructor() { }
 
   ngOnInit() {

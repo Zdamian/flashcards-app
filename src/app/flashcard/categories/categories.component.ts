@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MdInputModule } from '@angular/material';
+import { MdSnackBar } from '@angular/material';
 
 import { FlashcardService } from '../shared/flashcard.service';
 import { Category } from '../shared/category';
@@ -24,14 +25,37 @@ export class CategoriesComponent implements OnInit {
 
   public categoryId: string;
 
-  public message: string;
+  public temp: string;
 
-  constructor(private flashcardService: FlashcardService) { }
+  public color = 'primary';
+
+  public mode: string;
+
+  public value: number;
+
+  public isProgressVisible: boolean;
+
+  constructor(
+    private flashcardService: FlashcardService,
+    public snackBar: MdSnackBar
+  ) { }
 
   ngOnInit() {
     this.getCategories();
 
-    this.message = '';
+    this.temp = '';
+  }
+
+  showProgressBar() {
+    this.mode = 'indeterminate';
+    this.value = 100;
+    this.isProgressVisible = true;
+  }
+
+  hideProgressBar() {
+    this.mode = 'determinate';
+    this.value = 0;
+    this.isProgressVisible = false;
   }
 
   clearArrays() {
@@ -40,7 +64,8 @@ export class CategoriesComponent implements OnInit {
   }
 
   getCategories() {
-    this.clearArrays()
+    this.showProgressBar();
+    this.clearArrays();
     this.flashcardService.getCategories()
       .subscribe(categories => {
         console.log(categories);
@@ -49,13 +74,16 @@ export class CategoriesComponent implements OnInit {
           this.allCategories.push(newCategory);
           this.categoryId = undefined;
         });
+        this.hideProgressBar();
       }, err => {
         console.error(err);
+        this.hideProgressBar();
       });
   }
 
   getCategory(id: string) {
-    this.clearArrays()
+    this.category = <any>{};
+    this.temp = '';
     this.flashcardService.getCategory(id)
       .subscribe(category => {
         console.log(category);
@@ -68,53 +96,75 @@ export class CategoriesComponent implements OnInit {
   }
 
   editCategory(name: string, id: string) {
-    this.clearArrays()
     this.name = name;
     this.id = id;
-    console.log(this.name, this.id);
+    this.temp = 'editing category';
   }
 
   putCategory(nameEdit: string, id) {
-    this.clearArrays()
     const Id = this.id;
-    console.log(this.name, Id);
+    this.clearArrays();
+    this.temp = '';
+    this.showProgressBar();
     this.flashcardService.putCategory(nameEdit, Id)
       .subscribe(category => {
         this.name = '';
+        this.openSnackBarEdit();
         this.categoryId = undefined;
         this.getCategories();
+        this.hideProgressBar();
       }, err => {
         console.error(err);
+        this.openSnackBarFail();
+        this.hideProgressBar();
       });
   }
 
-  postCategory(name: string) {
-    this.clearArrays()
-    this.flashcardService.postCategory(name)
-      .subscribe(category => {
-        this.name = '';
-        this.categoryId = undefined;
-        this.getCategories();
-      }, err => {
-        console.error(err);
-      });
+  cancel(name: string) {
+    this.temp = '';
   }
 
   deleteCategory(id: string) {
-    this.clearArrays()
+    this.clearArrays();
+    this.showProgressBar();
+    this.temp = '';
     this.flashcardService.deleteCategory(id)
       .subscribe(category => {
-        console.log(id);
+        this.categoryId = undefined;
         this.getCategories();
+        this.hideProgressBar();
+        this.openSnackBarDelete();
       }, err => {
         console.error(err);
-        this.message = 'You can not delete this category';
+        this.categoryId = undefined;
+        this.getCategories();
+        this.hideProgressBar();
+        this.openSnackBarDeleteFail();
       });
   }
 
-  removeMessage() {
-    this.message = '';
-    this.getCategories();
+  openSnackBarDelete() {
+    this.snackBar.open('Category deleted!', '', {
+      duration: 2000,
+    });
+  }
+
+  openSnackBarDeleteFail() {
+    this.snackBar.open('You cannot delete this category!', '', {
+      duration: 2000,
+    });
+  }
+
+  openSnackBarEdit() {
+    this.snackBar.open('Category updated!', '', {
+      duration: 2000,
+    });
+  }
+
+  openSnackBarFail() {
+    this.snackBar.open('Something is wrong!', '', {
+      duration: 2000,
+    });
   }
 
 }
