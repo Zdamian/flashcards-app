@@ -81,6 +81,10 @@ export class FlashcardsLearnComponent implements OnInit {
 
   public isNextBtnVisible: boolean;
 
+  public isToggleBtnVisible: boolean;
+
+  public isCardOnEnglishSide: boolean;
+
   @HostListener('document:keydown', ['$event'])
   keydownHandler(e: KeyboardEvent) {
     if (e.keyCode === KEY.LEFT_ARROW) {
@@ -121,19 +125,29 @@ export class FlashcardsLearnComponent implements OnInit {
   }
 
   changeWord(element, english: string, polish: string) {
+
     if (element.textContent === english) {
       element.textContent = polish;
     } else {
       element.textContent = english;
     }
+
+    if (this.isToggleBtnVisible) {
+      this.isToggleBtnVisible = false;
+      this.isCardOnEnglishSide = false;
+    } else {
+      this.isToggleBtnVisible = true;
+      this.isCardOnEnglishSide = true;
+    }
   }
 
   onSlideToggleChange(id: string, slide: any) {
 
-    this.toggleKnown(id, slide.checked);
+    this.toggleKnown(id, slide.value);
   }
 
   toggleKnown(id: string, known: boolean) {
+    console.log(known);
     this.flashcardService.putWord(id, {known: known})
       .subscribe(category => {
         console.log('updated')

@@ -3,9 +3,7 @@
     
     <!--List of all words-->
     <div class="words-cards">
-      <md-card
-        *ngFor="let word of allWords"
-        [ngClass]="{'known': word.known, 'unknown': !word.known}">
+      <md-card *ngFor="let word of allWords">
         <div (click)="getWord(word.id)">
           <span>{{ word.english }}</span>
           -
@@ -23,12 +21,18 @@
           <span>{{ word.polish }}</span>
         </md-card-content>
         <md-card-actions>
-          <button md-mini-fab (click)="editWord(word.polish, word.english, word.id, word.category.id)">
-            <md-icon>create</md-icon>
-          </button>
-          <button md-mini-fab (click)="deleteWord(word.id)">
-            <md-icon>remove</md-icon>
-          </button>
+          <div class="example-container">
+            <div class="example-button-row">
+              <button
+                md-raised-button
+                (click)="editWord(word.polish, word.english, word.id, word.category.id)">Edit
+              </button>
+              <button
+                md-raised-button
+                (click)="deleteWord(word.id)">Remove
+              </button>
+            </div>
+          </div>
         </md-card-actions>
       </md-card>
     </div>
@@ -37,21 +41,42 @@
     <div class="form" *ngIf="temp.length > 0">
       <form>
         <md-input-container class="example-full-width">
-          <input mdInput type="text" placeholder="English" [(ngModel)]="english" [ngModelOptions]="{standalone: true}">
+          <input
+            mdInput
+            type="text"
+            placeholder="English"
+            [(ngModel)]="english"
+            [ngModelOptions]="{standalone: true}">
         </md-input-container>
         <md-input-container class="example-full-width">
-          <input mdInput type="text" placeholder="Polish" [(ngModel)]="polish" [ngModelOptions]="{standalone: true}">
+          <input
+            mdInput
+            type="text"
+            placeholder="Polish"
+            [(ngModel)]="polish"
+            [ngModelOptions]="{standalone: true}">
         </md-input-container>
-        <md-select placeholder="Choose Category" [(ngModel)]="categoryId" [ngModelOptions]="{standalone: true}">
-          <md-option *ngFor="let category of allCategoriesForm" [value]="category.id">
+        <md-select
+          placeholder="Choose Category"
+          [(ngModel)]="categoryId"
+          [ngModelOptions]="{standalone: true}">
+          <md-option
+            *ngFor="let category of allCategoriesForm"
+            [value]="category.id">
             {{ category.name }}
           </md-option>
         </md-select>
     </form>
     <div class="example-container">
       <div class="example-button-row">
-        <button md-raised-button (click)="putWord(polish, english)">Edit Word</button>
-        <button md-raised-button (click)="cancel()">Cancel</button>
+        <button
+          md-raised-button
+          (click)="putWord(polish, english)">Edit Word
+        </button>
+        <button
+          md-raised-button
+          (click)="cancel()">Cancel
+        </button>
       </div>
     </div>
   </div>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MdInputModule } from '@angular/material';
+import { MdSnackBar } from '@angular/material';
 
 import { FlashcardService } from '../shared/flashcard.service';
 import { Category } from '../shared/category';
@@ -26,7 +27,10 @@ export class CategoriesComponent implements OnInit {
 
   public temp: string;
 
-  constructor(private flashcardService: FlashcardService) { }
+  constructor(
+    private flashcardService: FlashcardService,
+    public snackBar: MdSnackBar
+  ) { }
 
   ngOnInit() {
     this.getCategories();
@@ -40,7 +44,7 @@ export class CategoriesComponent implements OnInit {
   }
 
   getCategories() {
-    this.clearArrays()
+    this.clearArrays();
     this.flashcardService.getCategories()
       .subscribe(categories => {
         console.log(categories);
@@ -82,11 +86,13 @@ export class CategoriesComponent implements OnInit {
       .subscribe(category => {
         this.name = '';
         this.temp = '';
-        this.clearArrays()
+        this.clearArrays();
+        this.openSnackBarEdit();
         this.categoryId = undefined;
         this.getCategories();
       }, err => {
         console.error(err);
+        this.openSnackBarFail();
       });
   }
 
@@ -95,14 +101,40 @@ export class CategoriesComponent implements OnInit {
   }
 
   deleteCategory(id: string) {
-    this.clearArrays()
+    this.temp = '';
     this.flashcardService.deleteCategory(id)
       .subscribe(category => {
         console.log(id);
         this.getCategories();
+        this.openSnackBarDelete();
       }, err => {
         console.error(err);
+        this.openSnackBarDeleteFail();
       });
+  }
+
+  openSnackBarDelete() {
+    this.snackBar.open('Category deleted!', '', {
+      duration: 2000,
+    });
+  }
+
+  openSnackBarDeleteFail() {
+    this.snackBar.open('You cannot delete this category!', '', {
+      duration: 2000,
+    });
+  }
+
+  openSnackBarEdit() {
+    this.snackBar.open('Category updated!', '', {
+      duration: 2000,
+    });
+  }
+
+  openSnackBarFail() {
+    this.snackBar.open('Something is wrong!', '', {
+      duration: 2000,
+    });
   }
 
 }

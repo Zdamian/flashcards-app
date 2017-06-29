@@ -17,12 +17,19 @@
           <p>{{ category.name }}</p>
         </md-card-content>
         <md-card-actions>
-          <button md-mini-fab (click)="editCategory(category.name, category.id)">
-            <md-icon>create</md-icon>
-          </button>
-          <button md-mini-fab (click)="deleteCategory(category.id)">
-            <md-icon>remove</md-icon>
-          </button>
+          <div class="example-container">
+            <div class="example-button-row">
+              <button
+                md-raised-button
+                (click)="editCategory(category.name, category.id)">Edit
+              </button>
+              <button
+                md-raised-button
+                (click)="deleteCategory(category.id)">Remove
+              </button>
+            </div>
+          </div>
+          
         </md-card-actions>
       </md-card>
     </div>
@@ -31,13 +38,24 @@
     <div class="form" *ngIf="temp.length > 0">
       <form>
         <md-input-container class="example-full-width">
-          <input mdInput type="text" placeholder="Category" [(ngModel)]="name" [ngModelOptions]="{standalone: true}">
+          <input
+            mdInput
+            type="text"
+            placeholder="Category"
+            [(ngModel)]="name"
+            [ngModelOptions]="{standalone: true}">
         </md-input-container>
       </form>
       <div class="example-container">
         <div class="example-button-row">
-          <button md-raised-button (click)="putCategory(name)">Edit Category</button>
-          <button md-raised-button (click)="cancel()">Cancel</button>
+          <button
+            md-raised-button
+            (click)="putCategory(name)">Edit Category
+          </button>
+          <button
+            md-raised-button
+            (click)="cancel()">Cancel
+          </button>
         </div>
       </div>
     </div>

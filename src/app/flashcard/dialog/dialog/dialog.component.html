@@ -1,4 +1,4 @@
-<div class="dialog-category" *ngIf="words.length === 0">
+<div class="dialog-category" *ngIf="areWordsVisible === false">
   <h3>{{ category.name }}</h3>
   <p>
     you have <strong> {{ flashcards.length }} </strong> {{ flashcards.length === 1? 'word' : 'words' }} in this category
@@ -12,25 +12,14 @@
       [routerLink]="['/flashcards', category.name]"
       routerLinkActive="active"
       md-dialog-close>Go to learn</button>
-    <!--<button
-      md-mini-fab
-      (click)="deleteCategory(category.id)"
-      md-dialog-close>
-      <md-icon>remove</md-icon>
-    </button>-->
   </div>
 </div>
 
-<div class="dialog-word" *ngIf="words.length > 0">
+<div class="dialog-word" *ngIf="areWordsVisible === true">
   <h3>{{ category.name }}</h3>
   <md-list>
     <md-list-item *ngFor="let word of words">
       {{ word.english }} - {{ word.polish }}
-      <!--<button
-        md-mini-fab
-        (click)="deleteWord(word.id)">
-        <md-icon>remove</md-icon>
-      </button>-->
     </md-list-item>
   </md-list>
   <div class="example-button-row">

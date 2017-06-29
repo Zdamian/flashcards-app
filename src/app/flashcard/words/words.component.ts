@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MdInputModule } from '@angular/material';
+import { MdSnackBar } from '@angular/material';
 
 import { FlashcardService } from '../shared/flashcard.service';
 import { Category } from '../shared/category';
@@ -28,7 +29,10 @@ export class WordsComponent implements OnInit {
 
   public temp: string;
 
-  constructor(private flashcardService: FlashcardService) { }
+  constructor(
+    private flashcardService: FlashcardService,
+    public snackBar: MdSnackBar
+  ) { }
 
   ngOnInit() {
     this.getWords();
@@ -106,10 +110,12 @@ export class WordsComponent implements OnInit {
         this.clearArrays()
         this.temp = '';
         this.allCategoriesForm = [];
+        this.openSnackBarEdit();
         this.getWords();
         this.getCategories();
       }, err => {
         console.error(err);
+        this.openSnackBarFail();
       });
   }
 
@@ -119,15 +125,35 @@ export class WordsComponent implements OnInit {
 
   deleteWord(id: string) {
     this.clearArrays()
+    this.temp = '';
     this.flashcardService.deleteWord(id)
       .subscribe(word => {
-        console.log(id);
         this.allCategoriesForm = [];
         this.getWords();
         this.getCategories();
+        this.openSnackBarDelete();
       }, err => {
         console.error(err);
+        this.openSnackBarFail();
       });
+  }
+
+  openSnackBarDelete() {
+    this.snackBar.open('Word deleted!', '', {
+      duration: 2000,
+    });
+  }
+
+  openSnackBarEdit() {
+    this.snackBar.open('Word updated!', '', {
+      duration: 2000,
+    });
+  }
+
+  openSnackBarFail() {
+    this.snackBar.open('Something is wrong!', '', {
+      duration: 2000,
+    });
   }
 
 }
