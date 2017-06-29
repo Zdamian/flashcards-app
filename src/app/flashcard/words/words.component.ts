@@ -26,12 +26,16 @@ export class WordsComponent implements OnInit {
 
   public categoryId: string;
 
+  public temp: string;
+
   constructor(private flashcardService: FlashcardService) { }
 
   ngOnInit() {
     this.getWords();
 
     this.getCategories();
+
+    this.temp = '';
   }
 
   clearArrays() {
@@ -68,7 +72,8 @@ export class WordsComponent implements OnInit {
   }
 
   getWord(id: string) {
-    this.clearArrays()
+    this.temp = '';
+    this.word = <any>{};
     this.flashcardService.getWord(id)
       .subscribe(word => {
         console.log(word);
@@ -82,16 +87,15 @@ export class WordsComponent implements OnInit {
   }
 
   editWord(polish: string, english: string, id: string, categoryId: string) {
-    this.clearArrays()
     this.polish = polish;
     this.english = english;
     this.id = id;
     this.categoryId = categoryId;
+    this.temp = 'editing word';
     console.log(this.polish, this.english, this.id, this.categoryId);
   }
 
   putWord(polish: string, english: string) {
-    this.clearArrays()
     const Id = this.id;
     this.flashcardService.putWord(Id, {polish: polish, english: english})
       .subscribe(category => {
@@ -99,6 +103,8 @@ export class WordsComponent implements OnInit {
         this.english = '';
         this.id = '';
         this.categoryId = '';
+        this.clearArrays()
+        this.temp = '';
         this.allCategoriesForm = [];
         this.getWords();
         this.getCategories();
@@ -107,20 +113,8 @@ export class WordsComponent implements OnInit {
       });
   }
 
-  postWord(polish: string, english: string) {
-    this.clearArrays()
-    this.flashcardService.postWord(polish, english, this.categoryId)
-      .subscribe(word => {
-        console.log(polish, english);
-        this.polish = '';
-        this.english = '';
-        this.categoryId = undefined;
-        this.allCategoriesForm = [];
-        this.getWords();
-        this.getCategories();
-      }, err => {
-        console.error(err);
-      });
+  cancel(name: string) {
+    this.temp = '';
   }
 
   deleteWord(id: string) {

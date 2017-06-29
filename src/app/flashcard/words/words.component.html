@@ -1,45 +1,62 @@
-<!--Add word-->
-<div>
-  <form class="example-form">
-    <md-input-container class="example-full-width">
-      <input mdInput type="text" placeholder="e.g house" [(ngModel)]="english" [ngModelOptions]="{standalone: true}">
-    </md-input-container>
-    <md-input-container class="example-full-width">
-      <input mdInput type="text" placeholder="e.g dom" [(ngModel)]="polish" [ngModelOptions]="{standalone: true}">
-    </md-input-container>
-    <md-select placeholder="Choose Category" [(ngModel)]="categoryId" [ngModelOptions]="{standalone: true}">
-      <md-option *ngFor="let category of allCategoriesForm" [value]="category.id">
-        {{ category.name }}
-      </md-option>
-    </md-select>
-</form>
-  <div class="example-container">
-    <div class="example-button-row">
-      <button md-raised-button (click)="postWord(polish, english)">Add New Word</button>
-      <button md-raised-button (click)="putWord(polish, english)">Edit Word</button>
+<div class="background">
+  <div class="flex-center">
+    
+    <!--List of all words-->
+    <div class="words-cards">
+      <md-card
+        *ngFor="let word of allWords"
+        [ngClass]="{'known': word.known, 'unknown': !word.known}">
+        <div (click)="getWord(word.id)">
+          <span>{{ word.english }}</span>
+          -
+          <span>{{ word.polish }}</span>
+        </div>
+      </md-card>
+    </div>
+
+    <!--Chosen word-->
+    <div class="word-card" *ngIf="word.polish">
+      <md-card>
+        <md-card-content>
+          <span>{{ word.english }}</span>
+          -
+          <span>{{ word.polish }}</span>
+        </md-card-content>
+        <md-card-actions>
+          <button md-mini-fab (click)="editWord(word.polish, word.english, word.id, word.category.id)">
+            <md-icon>create</md-icon>
+          </button>
+          <button md-mini-fab (click)="deleteWord(word.id)">
+            <md-icon>remove</md-icon>
+          </button>
+        </md-card-actions>
+      </md-card>
+    </div>
+
+    <!--Add word-->
+    <div class="form" *ngIf="temp.length > 0">
+      <form>
+        <md-input-container class="example-full-width">
+          <input mdInput type="text" placeholder="English" [(ngModel)]="english" [ngModelOptions]="{standalone: true}">
+        </md-input-container>
+        <md-input-container class="example-full-width">
+          <input mdInput type="text" placeholder="Polish" [(ngModel)]="polish" [ngModelOptions]="{standalone: true}">
+        </md-input-container>
+        <md-select placeholder="Choose Category" [(ngModel)]="categoryId" [ngModelOptions]="{standalone: true}">
+          <md-option *ngFor="let category of allCategoriesForm" [value]="category.id">
+            {{ category.name }}
+          </md-option>
+        </md-select>
+    </form>
+    <div class="example-container">
+      <div class="example-button-row">
+        <button md-raised-button (click)="putWord(polish, english)">Edit Word</button>
+        <button md-raised-button (click)="cancel()">Cancel</button>
+      </div>
     </div>
   </div>
+  </div>
+  <footer>
+    <p class="center-align">© 2017 All rights reserved<p>
+  </footer>
 </div>
-
-<!--List of all words-->
-<md-list>
-  <md-list-item *ngFor="let word of allWords"
-    [ngClass]="{'known': word.known, 'unknown': !word.known}">
-    <div (click)="getWord(word.id)">
-      <span>{{ word.polish }}</span>
-      -
-      <span>{{ word.english }}</span>
-    </div>
-  </md-list-item>
-</md-list>
-
-<!--Chosen word-->
-<md-list *ngIf="word.polish">
-  <md-list-item>
-      <span>{{ word.polish }}</span>
-      -
-      <span>{{ word.english }}</span>
-      <button md-mini-fab (click)="editWord(word.polish, word.english, word.id, word.category.id)"><md-icon>create</md-icon></button>
-      <button md-mini-fab (click)="deleteWord(word.id)"><md-icon>remove</md-icon></button>
-  </md-list-item>
-</md-list>

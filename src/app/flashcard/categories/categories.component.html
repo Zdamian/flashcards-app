@@ -1,9 +1,12 @@
 <div class="background">
   <div class="flex-center">
+
     <!--List of all categories-->
     <div class="categories-cards">
       <md-card *ngFor="let category of allCategories">
-        <span (click)="getCategory(category.id)">{{ category.name }}</span>
+        <div (click)="getCategory(category.id)">
+          <span>{{ category.name }}</span>
+        </div>
       </md-card>
     </div>
 
@@ -28,7 +31,7 @@
     <div class="form" *ngIf="temp.length > 0">
       <form>
         <md-input-container class="example-full-width">
-          <input mdInput type="text" placeholder="e.g home" [(ngModel)]="name" [ngModelOptions]="{standalone: true}">
+          <input mdInput type="text" placeholder="Category" [(ngModel)]="name" [ngModelOptions]="{standalone: true}">
         </md-input-container>
       </form>
       <div class="example-container">
