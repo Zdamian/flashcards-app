@@ -24,14 +24,14 @@ export class CategoriesComponent implements OnInit {
 
   public categoryId: string;
 
-  public message: string;
+  public temp: string;
 
   constructor(private flashcardService: FlashcardService) { }
 
   ngOnInit() {
     this.getCategories();
 
-    this.message = '';
+    this.temp = '';
   }
 
   clearArrays() {
@@ -55,7 +55,8 @@ export class CategoriesComponent implements OnInit {
   }
 
   getCategory(id: string) {
-    this.clearArrays()
+    this.category = <any>{};
+    this.temp = '';
     this.flashcardService.getCategory(id)
       .subscribe(category => {
         console.log(category);
@@ -68,19 +69,20 @@ export class CategoriesComponent implements OnInit {
   }
 
   editCategory(name: string, id: string) {
-    this.clearArrays()
     this.name = name;
     this.id = id;
+    this.temp = 'editing category';
     console.log(this.name, this.id);
   }
 
   putCategory(nameEdit: string, id) {
-    this.clearArrays()
     const Id = this.id;
     console.log(this.name, Id);
     this.flashcardService.putCategory(nameEdit, Id)
       .subscribe(category => {
         this.name = '';
+        this.temp = '';
+        this.clearArrays()
         this.categoryId = undefined;
         this.getCategories();
       }, err => {
@@ -88,16 +90,8 @@ export class CategoriesComponent implements OnInit {
       });
   }
 
-  postCategory(name: string) {
-    this.clearArrays()
-    this.flashcardService.postCategory(name)
-      .subscribe(category => {
-        this.name = '';
-        this.categoryId = undefined;
-        this.getCategories();
-      }, err => {
-        console.error(err);
-      });
+  cancel(name: string) {
+    this.temp = '';
   }
 
   deleteCategory(id: string) {
@@ -108,13 +102,7 @@ export class CategoriesComponent implements OnInit {
         this.getCategories();
       }, err => {
         console.error(err);
-        this.message = 'You can not delete this category';
       });
-  }
-
-  removeMessage() {
-    this.message = '';
-    this.getCategories();
   }
 
 }

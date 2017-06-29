@@ -4,7 +4,9 @@
     <button
       md-fab
       [disabled]="!isPreviousBtnVisible"
-      (click)="next(-1)"><md-icon>keyboard_arrow_left</md-icon></button>
+      (click)="next(-1)">
+      <md-icon>keyboard_arrow_left</md-icon>
+    </button>
     <ul>
       <ng-container *ngFor="let word of allWords; let id = index;">
         <li
@@ -18,13 +20,15 @@
             </md-card-content>
             <md-card-actions>
               <section class="example-section">
-                <span class="example-tooltip-host" mdTooltip="{{ word.known === false? 'Mark if You know this word' : 'Mark if You do not know this word' }}" [mdTooltipPosition]="position">
+                <span
+                  class="example-tooltip-host"
+                  mdTooltip="{{ word.known === false? 'Mark if You know this word' : 'Mark if You do not know this word' }}"
+                  [mdTooltipPosition]="position">
                   <md-slide-toggle
                     class="example-margin"
                     [color]="color"
                     [checked]="word.known"
                     [disabled]="disabled"
-                    
                     (change)="onSlideToggleChange(word.id, $event)">
                   </md-slide-toggle>
                 </span>
@@ -37,7 +41,9 @@
     <button
       md-fab
       [disabled]="!isNextBtnVisible"
-      (click)="next(1)"><md-icon>keyboard_arrow_right</md-icon></button>
+      (click)="next(1)">
+      <md-icon>keyboard_arrow_right</md-icon>
+    </button>
   </div>
   <footer>
     <p class="center-align">© 2017 All rights reserved<p>
