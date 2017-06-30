@@ -1,35 +1,42 @@
-<div class="dialog-category" *ngIf="areWordsVisible === false">
-  <h3>{{ category.name }}</h3>
-  <p>
-    you have <strong> {{ flashcards.length }} </strong> {{ flashcards.length === 1? 'word' : 'words' }} in this category
-  </p>
-  <div class="example-button-row">
-    <button
-      md-raised-button
-      (click)="preview()">Preview</button>
-    <button
-      md-raised-button
-      [routerLink]="['/flashcards', category.name]"
-      routerLinkActive="active"
-      md-dialog-close>Go to learn</button>
+<md-spinner *ngIf="isLoaderVisible"></md-spinner>
+<div *ngIf="!isLoaderVisible">
+  <div class="dialog-category" *ngIf="!areWordsVisible">
+    <h3>{{ category.name }}</h3>
+    <p>
+      you have <strong> {{ flashcards.length }} </strong> {{ flashcards.length === 1? 'word' : 'words' }} in this category
+    </p>
+    <div class="example-button-row">
+      <button
+        class="preview"
+        md-raised-button
+        (click)="preview()">Preview</button>
+      <button
+        class="learn"
+        md-raised-button
+        [routerLink]="['/flashcards', category.name]"
+        routerLinkActive="active"
+        md-dialog-close>Go to learn</button>
+    </div>
   </div>
-</div>
 
-<div class="dialog-word" *ngIf="areWordsVisible === true">
-  <h3>{{ category.name }}</h3>
-  <md-list>
-    <md-list-item *ngFor="let word of words">
-      {{ word.english }} - {{ word.polish }}
-    </md-list-item>
-  </md-list>
-  <div class="example-button-row">
-    <button
-      md-raised-button
-      (click)="toGridDetails()">Back</button>
-    <button
-      md-raised-button
-      [routerLink]="['/flashcards', category.name]"
-      routerLinkActive="active"
-      md-dialog-close>Go to learn</button>
+  <div class="dialog-word" *ngIf="areWordsVisible">
+    <h3>{{ category.name }}</h3>
+    <md-list>
+      <md-list-item *ngFor="let word of words">
+        {{ word.english }} - {{ word.polish }}
+      </md-list-item>
+    </md-list>
+    <div class="example-button-row">
+      <button
+        class="back"
+        md-raised-button
+        (click)="toGridDetails()">Back</button>
+      <button
+        class="learn"
+        md-raised-button
+        [routerLink]="['/flashcards', category.name]"
+        routerLinkActive="active"
+        md-dialog-close>Go to learn</button>
+    </div>
   </div>
 </div>

@@ -2,6 +2,7 @@
 <div class="background">
   <div class="flex-center">
     <button
+      class="previous"
       md-fab
       [disabled]="!isPreviousBtnVisible"
       (click)="next(-1)">
@@ -52,6 +53,7 @@
       </ng-container>
     </ul>
     <button
+      class="next"
       md-fab
       [disabled]="!isNextBtnVisible"
       (click)="next(1)">
