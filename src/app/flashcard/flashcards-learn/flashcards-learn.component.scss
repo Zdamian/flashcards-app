@@ -12,20 +12,29 @@
         align-items: center;
         flex-direction: row;
         height: 80vh;
-        width: 80vw;
         margin: 0 auto;
         overflow: auto;
 
+        $cardSize: 250px;
+
         ul {
-            display: flex;
-            flex-direction: row;
+            position: relative;
+            display: block;
             margin: 0;
             padding: 0;
             list-style-type: none;
             overflow: hidden;
+            width: $cardSize;
+            height: $cardSize;
 
             li {
-                display: flex;
+                position: absolute;
+                top: 0;
+                left: 0;
+                display: inline-block;
+                width: $cardSize;
+                height: $cardSize;
+                overflow: hidden;
             }
         }
     }
@@ -78,10 +87,6 @@
 .unknown {
     color: rgba(0,0,0,.38);
     background-color: lightcoral;
-}
-
-.polish-side {
-    background-color: white;
 }
 
 .english-side {

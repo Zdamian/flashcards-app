@@ -3,6 +3,7 @@ import {
   trigger, state, style, transition, animate
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import * as _ from 'underscore';
 
 import { FlashcardService } from '../shared/flashcard.service';
 import { Category } from '../shared/category';
@@ -10,8 +11,11 @@ import { Word } from '../shared/word';
 
 
 export const KEY = {
-    LEFT_ARROW: 37,
-    RIGHT_ARROW: 39,
+  SPACE: 32,
+  LEFT_ARROW: 37,
+  UP_ARROW: 38,
+  RIGHT_ARROW: 39,
+  DOWN_ARROW: 40,
 };
 
 export const TRANSITION_TIME = 800;
@@ -32,10 +36,12 @@ export const TRANSITION_TIME = 800;
       ]),
       transition('void => moveLeft', [
         style({
-          'transform': 'translateX(100%)'
+          'transform': 'translateX(100%)',
+          'left': '100px'
         }),
         animate(TRANSITION_TIME, style({
-          'transform': 'translateX(0)'
+          'transform': 'translateX(0)',
+          'left': '0px'
         }))
       ]),
       transition('moveRight => void', [
@@ -48,18 +54,31 @@ export const TRANSITION_TIME = 800;
       ]),
       transition('void => moveRight', [
         style({
-          'transform': 'translateX(-100%)'
+          'transform': 'translateX(-100%)',
+          'left': '-100px'
         }),
         animate(TRANSITION_TIME, style({
-          'transform': 'translateX(0)'
+          'transform': 'translateX(0)',
+          'left': '0px'
         }))
       ]),
+    ]),
+    trigger('sideAnimation', [
+      state('visible', style({
+        'transform': 'scale(1) rotateY(0)'
+      })),
+      state('hidden', style({
+        'transform': 'scale(0.6) rotateY(90deg)'
+      })),
+      transition('visible <=> hidden', animate(TRANSITION_TIME / 2))
     ]),
   ],
 })
 export class FlashcardsLearnComponent implements OnInit {
 
-  public stateAnimation: string;
+  public stateCardAnimation: string;
+
+  public stateSideAnimation: String = 'visible';
 
   public allWords: Word[] = [];
 
@@ -81,8 +100,6 @@ export class FlashcardsLearnComponent implements OnInit {
 
   public isNextBtnVisible: boolean;
 
-  public isToggleBtnVisible: boolean;
-
   public isCardOnEnglishSide: boolean;
 
   @HostListener('document:keydown', ['$event'])
@@ -91,6 +108,8 @@ export class FlashcardsLearnComponent implements OnInit {
       this.next(-1);
     } else if (e.keyCode === KEY.RIGHT_ARROW) {
       this.next(1);
+    } else if (e.keyCode === KEY.UP_ARROW || e.keyCode === KEY.DOWN_ARROW) {
+      this.changeSide();
     }
   }
 
@@ -124,21 +143,13 @@ export class FlashcardsLearnComponent implements OnInit {
       });
   }
 
-  changeWord(element, english: string, polish: string) {
+  changeSide() {
 
-    if (element.textContent === english) {
-      element.textContent = polish;
-    } else {
-      element.textContent = english;
-    }
-
-    if (this.isToggleBtnVisible) {
-      this.isToggleBtnVisible = false;
-      this.isCardOnEnglishSide = false;
-    } else {
-      this.isToggleBtnVisible = true;
-      this.isCardOnEnglishSide = true;
-    }
+    this.stateSideAnimation = 'hidden';
+    setTimeout(() => {
+      this.isCardOnEnglishSide = !this.isCardOnEnglishSide;
+      this.stateSideAnimation = 'visible';
+    }, TRANSITION_TIME / 2);
   }
 
   onSlideToggleChange(id: string, slide: any) {
@@ -149,7 +160,9 @@ export class FlashcardsLearnComponent implements OnInit {
   toggleKnown(id: string, known: boolean) {
     console.log(known);
     this.flashcardService.putWord(id, {known: known})
-      .subscribe(category => {
+      .subscribe(updatedWord => {
+        const updatingWord = _(this.allWords).findWhere({id: id});
+        updatingWord.known = updatedWord.known;
         console.log('updated')
       }, err => {
         console.error(err);
@@ -162,11 +175,11 @@ export class FlashcardsLearnComponent implements OnInit {
 
     if (dx > 0) {
       // go to next card
-      this.stateAnimation = 'moveLeft';
+      this.stateCardAnimation = 'moveLeft';
 
     } else {
       // go to previous card
-      this.stateAnimation = 'moveRight';
+      this.stateCardAnimation = 'moveRight';
 
     }
 
@@ -183,6 +196,8 @@ export class FlashcardsLearnComponent implements OnInit {
       } else {
         this.currentId = newPosition;
       }
+
+      this.isCardOnEnglishSide = false;
     });
   }
 }

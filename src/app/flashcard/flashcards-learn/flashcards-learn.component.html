@@ -11,16 +11,21 @@
       <ng-container *ngFor="let word of allWords; let id = index;">
         <li
           *ngIf="currentId === id"
-          [@cardAnimation]="stateAnimation">
+          [@cardAnimation]="stateCardAnimation"
+          (click)="changeSide()">
           <md-card
             class="example-card"
-            [ngClass]="{'english-side': isCardOnEnglishSide, 'polish-side': !isCardOnEnglishSide}">
-            <md-card-content (click)="changeWord($event.target, word.english, word.polish)">
-              <p>
-                {{ word.polish }}
+            [@sideAnimation]="stateSideAnimation"
+            [ngClass]="{
+              'english-side': isCardOnEnglishSide
+            }">
+            <md-card-content>
+              <p class="card-content">
+                {{ isCardOnEnglishSide ? word.english : word.polish }}
               </p>
             </md-card-content>
-            <md-card-actions>
+            <md-card-actions
+              *ngIf="isCardOnEnglishSide">
               <div class="example-container">
                 <div class="example-button-row">
                   <span
@@ -28,11 +33,14 @@
                     mdTooltip="{{ word.known === false? 'Mark if You know this word' : 'Mark if You do not know this word' }}"
                     [mdTooltipPosition]="position">
                     <md-button-toggle
-                      *ngIf="isToggleBtnVisible"
-                      [ngClass]="{'known': word.known, 'unknown': !word.known}"
+                      [ngClass]="{
+                        'known': word.known,
+                        'unknown': !word.known
+                      }"
                       [checked]="word.known"
                       [value]="!word.known"
-                      (change)="onSlideToggleChange(word.id, $event)">
+                      (change)="onSlideToggleChange(word.id, $event)"
+                      (click)="$event.stopPropagation()">
                       {{ word.known === true? 'known' : 'unknown' }}
                     </md-button-toggle>
                   </span>
