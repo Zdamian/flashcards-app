@@ -4,6 +4,7 @@
       mdTooltip="Home Page"
       [mdTooltipPosition]="position">
       <a
+        class="home-page"
         md-mini-fab
         routerLink="/home-page"
         routerLinkActive="active">
@@ -11,27 +12,32 @@
       </a>
     </span>
     <a
+      class="btn-add-word"
       md-button
       routerLink="/new-word"
       routerLinkActive="active">Add Word</a>
     <a
+      class="btn-add-category"
       md-button
       routerLink="/new-category"
       routerLinkActive="active">Add Category</a>
     <a
+      class="btn-flashcards"
       md-button
       routerLink="/flashcards"
       routerLinkActive="active">Flashcards</a>
     <span class="example-spacer"></span>
-    <button md-icon-button [mdMenuTriggerFor]="menu">
+    <button class="menu-more-vert" md-icon-button [mdMenuTriggerFor]="menu">
       <md-icon>more_vert</md-icon>
     </button>
     <md-menu #menu="mdMenu">
       <button
+        class="btn btn-categories"
         md-menu-item
         routerLink="/categories"
         routerLinkActive="active">Categories List</button>
       <button
+        class="btn btn-words"
         md-menu-item
         routerLink="/words"
         routerLinkActive="active">Words List</button>
