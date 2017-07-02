@@ -4,7 +4,7 @@
       <md-grid-tile *ngFor="let category of allCategories">
         <md-card class="example-card" (click)="openDialog(category.id, category.name)">
           <md-card-content>
-            <p>
+            <p class="flashcard-text">
               {{ category.name }}
             </p>
           </md-card-content>

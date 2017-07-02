@@ -24,16 +24,20 @@ export class DialogComponent implements OnInit {
 
   public areWordsVisible: boolean;
 
+  public isLoaderVisible: boolean;
+
   constructor(private flashcardService: FlashcardService, @Inject(MD_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
-      this.areWordsVisible = false;
+      this.isLoaderVisible = true;
 
       this.flashcardService.getCategory(this.data.id)
       .subscribe(category => {
         const newCategory = new Category(category.name, category._id);
         this.category = newCategory;
         this.categoryId = undefined;
+        this.isLoaderVisible = false;
+        this.areWordsVisible = false;
       }, err => {
         console.error(err);
       });
