@@ -46,4 +46,8 @@ export class FlashcardsLearnPage {
     return element(by.css(`md-card-actions md-button-toggle`)).click();
   }
 
+  clickHomePageButton() {
+    return this.getComponentElement().all(by.css('.home-page')).click();
+  }
+
 }

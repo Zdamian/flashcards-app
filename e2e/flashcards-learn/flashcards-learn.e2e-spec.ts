@@ -1,7 +1,7 @@
 import { browser } from 'protractor';
 import { FlashcardsLearnPage } from './flashcards-learn.po';
 
-describe('flashcards-learn App', () => {
+xdescribe('flashcards-learn App', () => {
   let page: FlashcardsLearnPage;
   page = new FlashcardsLearnPage();
 
@@ -99,6 +99,15 @@ describe('flashcards-learn App', () => {
     page.clickCard();
 
     expect(page.getCardText()).toEqual('pokój');
+  });
+
+  it('should go to "home-page"', () => {
+
+    page.clickHomePageButton();
+
+    browser.getCurrentUrl().then(url => {
+      expect(url.indexOf('/')).not.toBe(-1);
+    });
   });
 
 });

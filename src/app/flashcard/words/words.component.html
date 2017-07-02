@@ -3,7 +3,7 @@
     
     <!--List of all words-->
     <div class="words-cards">
-      <md-card *ngFor="let word of allWords">
+      <md-card class="words" *ngFor="let word of allWords">
         <div (click)="getWord(word.id)">
           <span>{{ word.english }}</span>
           -
@@ -24,10 +24,12 @@
           <div class="example-container">
             <div class="example-button-row">
               <button
+                class="edit"
                 md-raised-button
                 (click)="editWord(word.polish, word.english, word.id, word.category.id)">Edit
               </button>
               <button
+                class="remove"
                 md-raised-button
                 (click)="deleteWord(word.id)">Remove
               </button>

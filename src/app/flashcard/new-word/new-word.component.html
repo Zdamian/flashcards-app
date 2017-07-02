@@ -4,6 +4,7 @@
     <form class="example-form">
       <md-input-container class="example-full-width">
         <input
+          class="english-input"
           mdInput
           type="text"
           placeholder="English"
@@ -12,6 +13,7 @@
       </md-input-container>
       <md-input-container class="example-full-width">
         <input
+          class="polish-input"
           mdInput
           type="text"
           placeholder="Polish"
@@ -23,6 +25,7 @@
         [(ngModel)]="categoryId"
         [ngModelOptions]="{standalone: true}">
         <md-option
+          class="options"
           *ngFor="let category of allCategoriesForm"
           [value]="category.id">
           {{ category.name }}
@@ -32,6 +35,7 @@
     <div class="example-container">
       <div class="example-button-row">
         <button
+          class="btn-add-new-word"
           md-raised-button
           (click)="postWord(polish, english)">Add New Word</button>
       </div>
