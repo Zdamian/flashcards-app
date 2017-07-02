@@ -41,7 +41,8 @@
                       [checked]="word.known"
                       [value]="!word.known"
                       (change)="onSlideToggleChange(word.id, $event)"
-                      (click)="$event.stopPropagation()">
+                      (click)="$event.stopPropagation()"
+                      (window:keydown.space)="toggleKnown(word.id, !word.known)">
                       {{ word.known === true? 'known' : 'unknown' }}
                     </md-button-toggle>
                   </span>

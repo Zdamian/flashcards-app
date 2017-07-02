@@ -1,10 +1,14 @@
-.example-card {
+md-card {
   width: 200px;
   height: 200px;
   cursor: pointer;
 
   p {
       text-align: center;
+  }
+
+  &:hover {
+      background-color: lightyellow;
   }
 }
 
