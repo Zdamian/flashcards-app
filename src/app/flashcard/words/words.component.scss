@@ -20,6 +20,18 @@
           overflow: auto;
           width: 30vw;
 
+          &::-webkit-scrollbar {
+            width: 10px;
+          }
+          
+          &::-webkit-scrollbar-track {
+            background-color: #626262;
+          }
+          
+          &::-webkit-scrollbar-thumb {
+            background-color: #929292;
+          }
+
           md-card {
             margin: 5px 0;
             text-align: center;
