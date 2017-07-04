@@ -4,6 +4,7 @@ import {
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import * as _ from 'underscore';
+import { MdSnackBar } from '@angular/material';
 
 import { FlashcardService } from '../shared/flashcard.service';
 import { Category } from '../shared/category';
@@ -102,6 +103,12 @@ export class FlashcardsLearnComponent implements OnInit {
 
   public isCardOnEnglishSide: boolean;
 
+  public mode: string;
+
+  public value: number;
+
+  public isProgressVisible: boolean;
+
   @HostListener('document:keydown', ['$event'])
   keydownHandler(e: KeyboardEvent) {
     if (e.keyCode === KEY.LEFT_ARROW) {
@@ -115,13 +122,15 @@ export class FlashcardsLearnComponent implements OnInit {
 
   constructor(
     private flashcardService: FlashcardService,
-    private activatedRoute: ActivatedRoute) { }
+    private activatedRoute: ActivatedRoute,
+    public snackBar: MdSnackBar) { }
 
   ngOnInit() {
     this.initActivatedRoute();
   }
 
   initActivatedRoute() {
+    this.showProgressBar();
     this.activatedRoute.params.subscribe(params => {
       const category = params.category;
 
@@ -134,13 +143,39 @@ export class FlashcardsLearnComponent implements OnInit {
           });
           this.currentId = 0;
           this.categoryId = undefined;
+          this.hideProgressBar();
           if (this.allWords.length > 1) {
             this.isNextBtnVisible = true;
           }
         }, err => {
           console.error(err);
+          this.hideProgressBar();
         });
       });
+  }
+
+  showProgressBar() {
+    this.mode = 'indeterminate';
+    this.value = 100;
+    this.isProgressVisible = true;
+  }
+
+  hideProgressBar() {
+    this.mode = 'determinate';
+    this.value = 0;
+    this.isProgressVisible = false;
+  }
+
+  openSnackBarUpdateFail() {
+    this.snackBar.open('Something is wrong!', '', {
+      duration: 2000,
+    });
+  }
+
+  openSnackBarUpdate() {
+    this.snackBar.open('Word updated!', '', {
+      duration: 2000,
+    });
   }
 
   changeSide() {
@@ -158,14 +193,19 @@ export class FlashcardsLearnComponent implements OnInit {
   }
 
   toggleKnown(id: string, known: boolean) {
+    this.showProgressBar();
     console.log(known);
     this.flashcardService.putWord(id, {known: known})
       .subscribe(updatedWord => {
         const updatingWord = _(this.allWords).findWhere({id: id});
         updatingWord.known = updatedWord.known;
+        this.hideProgressBar();
+        this.openSnackBarUpdate();
         console.log('updated')
       }, err => {
+        this.openSnackBarUpdateFail();
         console.error(err);
+        this.hideProgressBar();
       });
   }
 
