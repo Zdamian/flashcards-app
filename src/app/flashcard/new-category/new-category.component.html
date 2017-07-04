@@ -1,21 +1,23 @@
 <!--Add category-->
 <div class="background">
   <div class="flex-center">
-    <form class="example-form">
-      <md-input-container class="example-full-width">
-        <input
-          mdInput
-          type="text"
-          placeholder="Category"
-          [(ngModel)]="name"
-          [ngModelOptions]="{standalone: true}">
-      </md-input-container>
-    </form>
-    <div class="example-container">
-      <div class="example-button-row">
-        <button
-          md-raised-button
-          (click)="postCategory(name)">Add New Category</button>
+    <div *ngIf="!isProgressVisible">
+      <form class="example-form">
+        <md-input-container class="example-full-width">
+          <input
+            mdInput
+            type="text"
+            placeholder="Category"
+            [(ngModel)]="name"
+            [ngModelOptions]="{standalone: true}">
+        </md-input-container>
+      </form>
+      <div class="example-container">
+        <div class="example-button-row">
+          <button
+            md-raised-button
+            (click)="postCategory(name)">Add New Category</button>
+        </div>
       </div>
     </div>
   </div>
@@ -23,3 +25,11 @@
     <p class="center-align">© 2017 All rights reserved<p>
   </footer>
 </div>
+
+<md-progress-spinner
+  *ngIf="isProgressVisible"
+  class="progress-spinner"
+  [color]="primary"
+  [mode]="mode"
+  [value]="value">
+</md-progress-spinner>

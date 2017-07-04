@@ -29,6 +29,18 @@ md-card {
         margin: 0 auto;
         overflow: auto;
 
+        &::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        &::-webkit-scrollbar-track {
+            background-color: #626262;
+        }
+        
+        &::-webkit-scrollbar-thumb {
+            background-color: #929292;
+        }
+
         md-grid-list {
             padding-bottom: 0 !important;
             height: 80vh;

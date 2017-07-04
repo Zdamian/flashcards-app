@@ -1,43 +1,45 @@
 <!--Add word-->
 <div class="background">
   <div class="flex-center">
-    <form class="example-form">
-      <md-input-container class="example-full-width">
-        <input
-          class="english-input"
-          mdInput
-          type="text"
-          placeholder="English"
-          [(ngModel)]="english"
+    <div *ngIf="!isProgressVisible">
+      <form class="example-form">
+        <md-input-container class="example-full-width">
+          <input
+            class="english-input"
+            mdInput
+            type="text"
+            placeholder="English"
+            [(ngModel)]="english"
+            [ngModelOptions]="{standalone: true}">
+        </md-input-container>
+        <md-input-container class="example-full-width">
+          <input
+            class="polish-input"
+            mdInput
+            type="text"
+            placeholder="Polish"
+            [(ngModel)]="polish"
+            [ngModelOptions]="{standalone: true}">
+        </md-input-container>
+        <md-select 
+          placeholder="Choose Category"
+          [(ngModel)]="categoryId"
           [ngModelOptions]="{standalone: true}">
-      </md-input-container>
-      <md-input-container class="example-full-width">
-        <input
-          class="polish-input"
-          mdInput
-          type="text"
-          placeholder="Polish"
-          [(ngModel)]="polish"
-          [ngModelOptions]="{standalone: true}">
-      </md-input-container>
-      <md-select 
-        placeholder="Choose Category"
-        [(ngModel)]="categoryId"
-        [ngModelOptions]="{standalone: true}">
-        <md-option
-          class="options"
-          *ngFor="let category of allCategoriesForm"
-          [value]="category.id">
-          {{ category.name }}
-        </md-option>
-      </md-select>
-    </form>
-    <div class="example-container">
-      <div class="example-button-row">
-        <button
-          class="btn-add-new-word"
-          md-raised-button
-          (click)="postWord(polish, english)">Add New Word</button>
+          <md-option
+            class="options"
+            *ngFor="let category of allCategoriesForm"
+            [value]="category.id">
+            {{ category.name }}
+          </md-option>
+        </md-select>
+      </form>
+      <div class="example-container">
+        <div class="example-button-row">
+          <button
+            class="btn-add-new-word"
+            md-raised-button
+            (click)="postWord(polish, english)">Add New Word</button>
+        </div>
       </div>
     </div>
   </div>
@@ -45,3 +47,11 @@
     <p class="center-align">© 2017 All rights reserved<p>
   </footer>
 </div>
+
+<md-progress-spinner
+  *ngIf="isProgressVisible"
+  class="progress-spinner"
+  [color]="primary"
+  [mode]="mode"
+  [value]="value">
+</md-progress-spinner>

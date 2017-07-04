@@ -84,14 +84,17 @@ export class CategoriesComponent implements OnInit {
   getCategory(id: string) {
     this.category = <any>{};
     this.temp = '';
+    this.showProgressBar();
     this.flashcardService.getCategory(id)
       .subscribe(category => {
         console.log(category);
         const newCategory = new Category(category.name, category._id);
         this.category = newCategory;
         this.categoryId = undefined;
+        this.hideProgressBar();
       }, err => {
         console.error(err);
+        this.hideProgressBar();
       });
   }
 

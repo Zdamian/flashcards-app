@@ -18,19 +18,44 @@ export class FlashcardsComponent implements OnInit {
 
   public categoryId: string;
 
+  public mode: string;
+
+  public value: number;
+
+  public isProgressVisible: boolean;
+
   constructor(private flashcardService: FlashcardService, public dialog: MdDialog) { }
 
   ngOnInit() {
+    this.getCategories();
+  }
+
+  getCategories() {
+    this.showProgressBar();
     this.flashcardService.getCategories()
       .subscribe(categories => {
         categories.forEach(category => {
           const newCategory = new Category(category.name, category._id);
           this.allCategories.push(newCategory);
           this.categoryId = undefined;
+          this.hideProgressBar();
         });
       }, err => {
         console.error(err);
+        this.hideProgressBar();
       });
+  }
+
+  showProgressBar() {
+    this.mode = 'indeterminate';
+    this.value = 100;
+    this.isProgressVisible = true;
+  }
+
+  hideProgressBar() {
+    this.mode = 'determinate';
+    this.value = 0;
+    this.isProgressVisible = false;
   }
 
   openDialog(id: string, name: string) {
