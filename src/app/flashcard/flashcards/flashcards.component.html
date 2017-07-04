@@ -16,3 +16,11 @@
     <p class="center-align">© 2017 All rights reserved<p>
   </footer>
 </div>
+
+<md-progress-spinner
+  *ngIf="isProgressVisible"
+  class="progress-spinner"
+  [color]="primary"
+  [mode]="mode"
+  [value]="value">
+</md-progress-spinner>

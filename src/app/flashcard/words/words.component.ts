@@ -101,6 +101,7 @@ export class WordsComponent implements OnInit {
   getWord(id: string) {
     this.temp = '';
     this.word = <any>{};
+    this.showProgressBar();
     this.flashcardService.getWord(id)
       .subscribe(word => {
         console.log(word);
@@ -108,8 +109,10 @@ export class WordsComponent implements OnInit {
         const newWord = new Word(word.polish, word.english, newCategory, word.known, word._id);
         this.word = newWord;
         this.categoryId = undefined;
+        this.hideProgressBar();
       }, err => {
         console.error(err);
+        this.hideProgressBar();
       });
   }
 

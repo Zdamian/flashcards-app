@@ -30,6 +30,18 @@
         overflow: auto;
         margin-bottom: 20px;
         text-transform: capitalize;
+
+        &::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        &::-webkit-scrollbar-track {
+            background-color: #626262;
+        }
+        
+        &::-webkit-scrollbar-thumb {
+            background-color: #929292;
+        }
     }
 }
 

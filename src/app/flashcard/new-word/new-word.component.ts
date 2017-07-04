@@ -25,6 +25,12 @@ export class NewWordComponent implements OnInit {
 
   public categoryId: string;
 
+  public mode: string;
+
+  public value: number;
+
+  public isProgressVisible: boolean;
+
   constructor(
     private flashcardService: FlashcardService,
     public snackBar: MdSnackBar
@@ -36,6 +42,18 @@ export class NewWordComponent implements OnInit {
 
   clearArrays() {
     this.word = <any>{};
+  }
+
+  showProgressBar() {
+    this.mode = 'indeterminate';
+    this.value = 100;
+    this.isProgressVisible = true;
+  }
+
+  hideProgressBar() {
+    this.mode = 'determinate';
+    this.value = 0;
+    this.isProgressVisible = false;
   }
 
   getCategories() {
@@ -67,6 +85,7 @@ export class NewWordComponent implements OnInit {
 
   postWord(polish: string, english: string) {
     this.clearArrays();
+    this.showProgressBar();
     this.flashcardService.postWord(polish, english, this.categoryId)
       .subscribe(word => {
         console.log(polish, english);
@@ -76,9 +95,11 @@ export class NewWordComponent implements OnInit {
         this.allCategoriesForm = [];
         this.getCategories();
         this.openSnackBar();
+        this.hideProgressBar();
       }, err => {
         console.error(err);
         this.openSnackBarFail();
+        this.hideProgressBar();
       });
   }
 
